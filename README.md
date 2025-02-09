@@ -21,5 +21,6 @@ L'utilisateur fait sa requête à chatbot_lib. Ce dernier lui affiche la synthè
 
 ### Architecture du projet
 
-![image](https://github.com/user-attachments/assets/9d573c46-cbfc-4dae-92ee-ffb1e6e9fecd)
+![image](misc/architecture.png)
+
 
