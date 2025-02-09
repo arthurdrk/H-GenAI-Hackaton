@@ -38,11 +38,9 @@ L'architecture repose sur un **système modulaire**, intégrant des services de 
 ✅ Visualisation claire des données  
 
 ### Business Model
-Notre modèle économique repose sur l'intégration de notre outil dans le **processus décisionnel de Sfil**, avec des options d'expansion vers d'autres collectivités locales.
-
-> _Figure 5 : Stratégie de monétisation (Slide Business Model)_
+Notre modèle économique repose sur l'intégration de notre outil dans le **processus décisionnel de Sfil**, avec des options d'expansion vers d'autres collectivités locales.  
 <img width="476" alt="business model" src="https://github.com/user-attachments/assets/9be3def7-b240-49ae-abf0-6ef0424d6c24" />
-
+> _Figure 5 : Business model_
 ---
 📌 **Projet développé par l'équipe GEN'SAE**
 
