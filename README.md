@@ -6,6 +6,7 @@ Cas d'usage : **Sfil 2**
 
 <img width="476" alt="gensae" src="https://github.com/user-attachments/assets/b7d89183-b44e-4d7f-a888-795390c68234" />
 > _Figure 1 : Notre équipe_
+> 
 ### Solution proposée
 Nous avons développé un **portail interactif** combiné à un **agent conversationnel** capable d'exploiter les données publiques (INSEE, DGFIP) et internes à Sfil. Ce portail permet aux utilisateurs de formuler des requêtes afin de **rechercher, croiser et analyser** les informations disponibles. 
 
