@@ -29,7 +29,8 @@ L'utilisateur fait sa requête à **chatbot_lib**. Ce dernier affiche :
 
 
 
-https://github.com/user-attachments/assets/474ff458-ff67-4a7a-831e-a83079038cfe
+
+https://github.com/user-attachments/assets/0576ac26-8a34-452c-b266-c6f56249c24f
 
 *Figure 3 : Expérience utilisateur*  
 
