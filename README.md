@@ -9,7 +9,7 @@
 
 ## Hackathon-HgenAI
 
-Nom de l'équipe : Gen'SAE 
+Nom de l'équipe : GEN'SAE 
 
 Cas d'usage : Sfil 2
 
