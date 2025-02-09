@@ -1,0 +1,2394 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Adresse de la documentation https://hubeau.eaufrance.fr/page/api-indicateurs-services",
+        "version": "0.3.1",
+        "title": "API Hub'Eau - Indicateurs eau potable et assainissement",
+        "contact": {},
+        "license": {}
+    },
+    "host": "hubeau.eaufrance.fr",
+    "basePath": "/api",
+    "tags": [
+        {
+            "name": "indicateurs-services",
+            "description": "Opérations sur les indicateurs des services d'eau et d'assainissement"
+        }
+    ],
+    "paths": {
+        "/v0/indicateurs_services/communes": {
+            "get": {
+                "tags": [
+                    "indicateurs-services"
+                ],
+                "summary": "Lister les services par commune",
+                "description": "Appel des indicateurs de performance des services publics d'eau et d'assainissement par commune (un minimum, maximum et  moyenne sont calculés quand il existe plusieurs services publics sur une même commune)Source de données : Observatoire des services publics de l'eau et de l'assainissement : prix de l'eau et performance des servicesSite web : http://services.eaufrance.fr/Si la valeur du paramètre size n'est pas renseignée, la taille de page par défaut : 2000, taille max de la page : 10000.La profondeur d'accès aux résultats est : 20000, calcul de la profondeur = numéro de la page * nombre maximum de résultats dans une page.",
+                "operationId": "indicateurs_services_commune",
+                "produces": [
+                    "application/json",
+                    "application/vnd.geo+json",
+                    "application/javascript;charset=UTF-8"
+                ],
+                "parameters": [
+                    {
+                        "name": "annee",
+                        "in": "query",
+                        "description": "Année sur 4 chiffres",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "code_commune",
+                        "in": "query",
+                        "description": "Code(s) INSEE de la commune, si plusieurs codes communes, séparer les codes communes par une virgule, par exemple pour avoir les codes communes 17300 et 17299 : code_commune=17300,17299 le nombre maximum de commune est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_departement",
+                        "in": "query",
+                        "description": "Code INSEE du département",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "detail_service",
+                        "in": "query",
+                        "description": "Affiche le détail par service (défaut : false)",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Liste des champs souhaités dans la réponse (fonctionnalité expérimentale), par exemple fields=code_station,localisation",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "format",
+                        "in": "query",
+                        "description": "Format de réponse attendu. Supportés : json, geojson (défaut : json)",
+                        "required": false,
+                        "type": "string",
+                        "default": "json",
+                        "enum": [
+                            "json",
+                            "geojson"
+                        ]
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Numéro de la page",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Nombre maximum de résultats dans une page",
+                        "required": false,
+                        "type": "integer",
+                        "default": 20,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "type_service",
+                        "in": "query",
+                        "description": "Type de services, valeur possible : AEP, AC, ANC",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "AEP",
+                            "AC",
+                            "ANC"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK, tous les résultats sont présents dans la réponse",
+                        "schema": {
+                            "originalRef": "Résultat d'une rêquete sur les services par commune",
+                            "$ref": "#/definitions/Résultat d'une rêquete sur les services par commune"
+                        }
+                    },
+                    "206": {
+                        "description": "OK, il reste des résultats",
+                        "schema": {
+                            "originalRef": "Résultat d'une rêquete sur les services par commune",
+                            "$ref": "#/definitions/Résultat d'une rêquete sur les services par commune"
+                        }
+                    },
+                    "400": {
+                        "description": "Requête incorrecte",
+                        "schema": {
+                            "originalRef": "Message d'erreur",
+                            "$ref": "#/definitions/Message d'erreur"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/v0/indicateurs_services/communes.csv": {
+            "get": {
+                "tags": [
+                    "indicateurs-services"
+                ],
+                "summary": "Lister les services par commune au format CSV",
+                "description": "Appel des indicateurs de performance des services publics d'eau et d'assainissement par commune (un minimum, maximum et  moyenne sont calculés quand il existe plusieurs services publics sur une même commune)Source de données : Observatoire des services publics de l'eau et de l'assainissement : prix de l'eau et performance des servicesSite web : http://services.eaufrance.fr/Si la valeur du paramètre size n'est pas renseignée, la taille de page par défaut : 2000, taille max de la page : 10000.La profondeur d'accès aux résultats est : 20000, calcul de la profondeur = numéro de la page * nombre maximum de résultats dans une page.",
+                "operationId": "indicateurs_services_commune_csv",
+                "produces": [
+                    "text/csv"
+                ],
+                "parameters": [
+                    {
+                        "name": "annee",
+                        "in": "query",
+                        "description": "Année sur 4 chiffres",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "code_commune",
+                        "in": "query",
+                        "description": "Code(s) INSEE de la commune, si plusieurs codes communes, séparer les codes communes par une virgule, par exemple pour avoir les codes communes 17300 et 17299 : code_commune=17300,17299 le nombre maximum de commune est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_departement",
+                        "in": "query",
+                        "description": "Code INSEE du département",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Liste des champs souhaités dans la réponse (fonctionnalité expérimentale), par exemple fields=code_station,localisation",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Numéro de la page",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Nombre maximum de résultats dans une page",
+                        "required": false,
+                        "type": "integer",
+                        "default": 20,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "type_service",
+                        "in": "query",
+                        "description": "Type de services, valeur possible : AEP, AC, ANC",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "AEP",
+                            "AC",
+                            "ANC"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK, tous les résultats sont présents dans la réponse",
+                        "schema": {
+                            "originalRef": "Niveau d'un service par commune au format CSV",
+                            "$ref": "#/definitions/Niveau d'un service par commune au format CSV"
+                        }
+                    },
+                    "206": {
+                        "description": "OK, il reste des résultats",
+                        "schema": {
+                            "originalRef": "Niveau d'un service par commune au format CSV",
+                            "$ref": "#/definitions/Niveau d'un service par commune au format CSV"
+                        }
+                    },
+                    "400": {
+                        "description": "Requête incorrecte",
+                        "schema": {
+                            "originalRef": "Message d'erreur",
+                            "$ref": "#/definitions/Message d'erreur"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/v0/indicateurs_services/indicateurs": {
+            "get": {
+                "tags": [
+                    "indicateurs-services"
+                ],
+                "summary": "Lister les services par indicateur",
+                "description": "Appel par indicateur. Retourne la liste des valeurs de performance par service public d'eau et d'assainissement par service.Source de données : Observatoire des services publics de l'eau et de l'assainissement : prix de l'eau et performance des servicesSite web : http://services.eaufrance.fr/Si la valeur du paramètre size n'est pas renseignée, la taille de page par défaut : 2000, taille max de la page : 5000.La profondeur d'accès aux résultats est : 20000, calcul de la profondeur = numéro de la page * nombre maximum de résultats dans une page.",
+                "operationId": "indicateurs_services",
+                "produces": [
+                    "application/json",
+                    "application/javascript;charset=UTF-8"
+                ],
+                "parameters": [
+                    {
+                        "name": "annee",
+                        "in": "query",
+                        "description": "Année sur 4 chiffres",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "code_indicateur",
+                        "in": "query",
+                        "description": "Code de l'indicateur (cf la liste des indicateurs http://www.services.eaufrance.fr/docs/indicateurs/Liste_des_indicateurs_de_performance.pdf)",
+                        "required": true,
+                        "type": "string",
+                        "default": "D102.0"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Liste des champs souhaités dans la réponse (fonctionnalité expérimentale), par exemple fields=code_station,localisation",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "format",
+                        "in": "query",
+                        "description": "Format de réponse attendu. Supporté : json (défaut : json)",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "json"
+                        ]
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Numéro de la page",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Nombre maximum de résultats dans une page",
+                        "required": false,
+                        "type": "integer",
+                        "default": 20,
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK, tous les résultats sont présents dans la réponse",
+                        "schema": {
+                            "originalRef": "Résultat d'une rêquete sur les indicateurs par service",
+                            "$ref": "#/definitions/Résultat d'une rêquete sur les indicateurs par service"
+                        }
+                    },
+                    "206": {
+                        "description": "OK, il reste des résultats",
+                        "schema": {
+                            "originalRef": "Résultat d'une rêquete sur les indicateurs par service",
+                            "$ref": "#/definitions/Résultat d'une rêquete sur les indicateurs par service"
+                        }
+                    },
+                    "400": {
+                        "description": "Requête incorrecte",
+                        "schema": {
+                            "originalRef": "Message d'erreur",
+                            "$ref": "#/definitions/Message d'erreur"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/v0/indicateurs_services/indicateurs.csv": {
+            "get": {
+                "tags": [
+                    "indicateurs-services"
+                ],
+                "summary": "Lister les services par indicateur au format CSV",
+                "description": "Appel par indicateur. Retourne la liste des valeurs de performance par service public d'eau et d'assainissement par service.Source de données : Observatoire des services publics de l'eau et de l'assainissement : prix de l'eau et performance des servicesSite web : http://services.eaufrance.fr/Si la valeur du paramètre size n'est pas renseignée, la taille de page par défaut : 2000, taille max de la page : 5000.La profondeur d'accès aux résultats est : 20000, calcul de la profondeur = numéro de la page * nombre maximum de résultats dans une page.",
+                "operationId": "indicateurs_services_csv",
+                "produces": [
+                    "text/csv"
+                ],
+                "parameters": [
+                    {
+                        "name": "annee",
+                        "in": "query",
+                        "description": "Année sur 4 chiffres",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "code_indicateur",
+                        "in": "query",
+                        "description": "Code de l'indicateur (cf la liste des indicateurs http://www.services.eaufrance.fr/docs/indicateurs/Liste_des_indicateurs_de_performance.pdf)",
+                        "required": true,
+                        "type": "string",
+                        "default": "D102.0"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Liste des champs souhaités dans la réponse (fonctionnalité expérimentale), par exemple fields=code_station,localisation",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Numéro de la page",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Nombre maximum de résultats dans une page",
+                        "required": false,
+                        "type": "integer",
+                        "default": 20,
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK, tous les résultats sont présents dans la réponse",
+                        "schema": {
+                            "originalRef": "La liste des valeurs de l'indicateur par service",
+                            "$ref": "#/definitions/La liste des valeurs de l'indicateur par service"
+                        }
+                    },
+                    "206": {
+                        "description": "OK, il reste des résultats",
+                        "schema": {
+                            "originalRef": "La liste des valeurs de l'indicateur par service",
+                            "$ref": "#/definitions/La liste des valeurs de l'indicateur par service"
+                        }
+                    },
+                    "400": {
+                        "description": "Requête incorrecte",
+                        "schema": {
+                            "originalRef": "Message d'erreur",
+                            "$ref": "#/definitions/Message d'erreur"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/v0/indicateurs_services/services": {
+            "get": {
+                "tags": [
+                    "indicateurs-services"
+                ],
+                "summary": "Lister les services par service",
+                "description": "Appel par service. Retourne la liste des indicateurs de performance par service public d'eau et d'assainissement pour une commune donnée.Source de données : Observatoire des services publics de l'eau et de l'assainissement : prix de l'eau et performance des servicesSite web : http://services.eaufrance.fr/Si la valeur du paramètre size n'est pas renseignée, la taille de page par défaut : 5000, taille max de la page : 20000.La profondeur d'accès aux résultats est : 20000, calcul de la profondeur = numéro de la page * nombre maximum de résultats dans une page.",
+                "operationId": "indicateurs_services_service",
+                "produces": [
+                    "application/json",
+                    "application/javascript;charset=UTF-8"
+                ],
+                "parameters": [
+                    {
+                        "name": "annee",
+                        "in": "query",
+                        "description": "Année sur 4 chiffres",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "code_commune",
+                        "in": "query",
+                        "description": "Code(s) INSEE de la commune, si plusieurs codes communes, séparer les codes communes par une virgule, par exemple pour avoir les codes communes 17300 et 17299 : code_commune=17300,17299 le nombre maximum de commune est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_departement",
+                        "in": "query",
+                        "description": "Code INSEE du département",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Liste des champs souhaités dans la réponse (fonctionnalité expérimentale), par exemple fields=code_station,localisation",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "format",
+                        "in": "query",
+                        "description": "Format de réponse attendu. Supporté : json (défaut : json)",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "json"
+                        ]
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Numéro de la page",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Nombre maximum de résultats dans une page",
+                        "required": false,
+                        "type": "integer",
+                        "default": 20,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "type_service",
+                        "in": "query",
+                        "description": "Type de services, valeur possible : AEP, AC, ANC",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "AEP",
+                            "AC",
+                            "ANC"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK, tous les résultats sont présents dans la réponse",
+                        "schema": {
+                            "originalRef": "Résultat d'une rêquete sur les indicateurs par service pour une commune donné",
+                            "$ref": "#/definitions/Résultat d'une rêquete sur les indicateurs par service pour une commune donné"
+                        }
+                    },
+                    "206": {
+                        "description": "OK, il reste des résultats",
+                        "schema": {
+                            "originalRef": "Résultat d'une rêquete sur les indicateurs par service pour une commune donné",
+                            "$ref": "#/definitions/Résultat d'une rêquete sur les indicateurs par service pour une commune donné"
+                        }
+                    },
+                    "400": {
+                        "description": "Requête incorrecte",
+                        "schema": {
+                            "originalRef": "Message d'erreur",
+                            "$ref": "#/definitions/Message d'erreur"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/v0/indicateurs_services/services.csv": {
+            "get": {
+                "tags": [
+                    "indicateurs-services"
+                ],
+                "summary": "Lister les services par service au format CSV",
+                "description": "Appel par service. Retourne la liste des indicateurs de performance par service public d'eau et d'assainissement pour une commune donnée.Source de données : Observatoire des services publics de l'eau et de l'assainissement : prix de l'eau et performance des servicesSite web : http://services.eaufrance.fr/Si la valeur du paramètre size n'est pas renseignée, la taille de page par défaut : 5000, taille max de la page : 20000.La profondeur d'accès aux résultats est : 20000, calcul de la profondeur = numéro de la page * nombre maximum de résultats dans une page.",
+                "operationId": "indicateurs_services_service_csv",
+                "produces": [
+                    "text/csv"
+                ],
+                "parameters": [
+                    {
+                        "name": "annee",
+                        "in": "query",
+                        "description": "Année sur 4 chiffres",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "code_commune",
+                        "in": "query",
+                        "description": "Code(s) INSEE de la commune, si plusieurs codes communes, séparer les codes communes par une virgule, par exemple pour avoir les codes communes 17300 et 17299 : code_commune=17300,17299 le nombre maximum de commune est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_departement",
+                        "in": "query",
+                        "description": "Code INSEE du département",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Liste des champs souhaités dans la réponse (fonctionnalité expérimentale), par exemple fields=code_station,localisation",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Numéro de la page",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Nombre maximum de résultats dans une page",
+                        "required": false,
+                        "type": "integer",
+                        "default": 20,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "type_service",
+                        "in": "query",
+                        "description": "Type de services, valeur possible : AEP, AC, ANC",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "AEP",
+                            "AC",
+                            "ANC"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK, tous les résultats sont présents dans la réponse",
+                        "schema": {
+                            "originalRef": "La liste des indicateurs par service pour une commune donnée  au format CSV",
+                            "$ref": "#/definitions/La liste des indicateurs par service pour une commune donnée  au format CSV"
+                        }
+                    },
+                    "206": {
+                        "description": "OK, il reste des résultats",
+                        "schema": {
+                            "originalRef": "La liste des indicateurs par service pour une commune donnée  au format CSV",
+                            "$ref": "#/definitions/La liste des indicateurs par service pour une commune donnée  au format CSV"
+                        }
+                    },
+                    "400": {
+                        "description": "Requête incorrecte",
+                        "schema": {
+                            "originalRef": "Message d'erreur",
+                            "$ref": "#/definitions/Message d'erreur"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                },
+                "deprecated": false
+            }
+        }
+    },
+    "definitions": {
+        "Crs": {
+            "type": "object",
+            "properties": {
+                "properties": {
+                    "type": "object"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "name",
+                        "link"
+                    ]
+                }
+            },
+            "title": "Crs"
+        },
+        "Erreur": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "Code de l'erreur"
+                },
+                "message": {
+                    "type": "string",
+                    "description": "Message en rapport avec l'erreur sur le paramètre"
+                },
+                "field": {
+                    "type": "string",
+                    "description": "Le nom du paramètre avec l'erreur"
+                }
+            },
+            "title": "Erreur",
+            "description": "Erreur"
+        },
+        "Feature": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "crs": {
+                    "originalRef": "Crs",
+                    "$ref": "#/definitions/Crs"
+                },
+                "geometry": {
+                    "originalRef": "GeoJsonObject",
+                    "$ref": "#/definitions/GeoJsonObject"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "properties": {
+                    "type": "object"
+                }
+            },
+            "title": "Feature"
+        },
+        "FeatureCollection": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "crs": {
+                    "originalRef": "Crs",
+                    "$ref": "#/definitions/Crs"
+                },
+                "features": {
+                    "type": "array",
+                    "items": {
+                        "originalRef": "Feature",
+                        "$ref": "#/definitions/Feature"
+                    }
+                }
+            },
+            "title": "FeatureCollection"
+        },
+        "GeometryCollection": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "crs": {
+                    "originalRef": "Crs",
+                    "$ref": "#/definitions/Crs"
+                },
+                "geometries": {
+                    "type": "array",
+                    "items": {
+                        "originalRef": "GeoJsonObject",
+                        "$ref": "#/definitions/GeoJsonObject"
+                    }
+                }
+            },
+            "title": "GeometryCollection"
+        },
+        "La liste des indicateurs par service pour une commune donnée": {
+            "type": "object",
+            "required": [
+                "annee"
+            ],
+            "properties": {
+                "code_service": {
+                    "type": "integer",
+                    "description": "Code du service"
+                },
+                "nom_service": {
+                    "type": "string",
+                    "description": "Nom du service"
+                },
+                "codes_commune": {
+                    "type": "array",
+                    "description": "Liste des codes INSEE communes",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "noms_commune": {
+                    "type": "array",
+                    "description": "Liste des noms de commune",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "numero_siren": {
+                    "type": "string",
+                    "description": "Numéro SIREN du service public d'eau ou d'assainissement"
+                },
+                "type_collectivite": {
+                    "type": "string",
+                    "description": "Type de collectivité"
+                },
+                "mode_gestion": {
+                    "type": "string",
+                    "description": "Mode de gestion"
+                },
+                "annee": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Année"
+                },
+                "indicateurs": {
+                    "type": "object",
+                    "description": "Valeurs des indicateurs, cf la liste des indicateurs http://www.services.eaufrance.fr/docs/indicateurs/Liste_des_indicateurs_de_performance.pdf",
+                    "additionalProperties": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "title": "La liste des indicateurs par service pour une commune donnée",
+            "description": "La liste des indicateurs par service pour une commune donnée"
+        },
+        "La liste des indicateurs par service pour une commune donnée  au format CSV": {
+            "type": "object",
+            "required": [
+                "annee"
+            ],
+            "properties": {
+                "ac_D201_0": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_D202_0": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_D204_0": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_P201_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_P203_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_P204_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_P205_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_P258_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_023": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_056": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_176": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_177": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_178": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_179": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_186": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_190": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_191": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_199": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_200": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_228": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_229": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_D101_0": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_D102_0": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_D151_0": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_DC_192": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P101_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P101_1a": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P101_1b": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P102_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P102_1a": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P102_1b": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P104_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P106_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P107_2": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P108_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P151_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P152_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P155_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_056": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_059": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_060": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_061": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_063": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_177": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_178": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_179": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_190": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_191": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_201": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_228": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_231": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_D301_0": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_DC_196": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_DC_197": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_P301_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_VP_166": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_VP_167": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_VP_168": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_VP_169": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_VP_230": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "code_service": {
+                    "type": "integer",
+                    "description": "Code du service"
+                },
+                "nom_service": {
+                    "type": "string",
+                    "description": "Nom du service"
+                },
+                "codes_commune": {
+                    "type": "array",
+                    "description": "Liste des codes INSEE communes",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "noms_commune": {
+                    "type": "array",
+                    "description": "Liste des noms de commune",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "numero_siren": {
+                    "type": "string",
+                    "description": "Numéro SIREN du service public d'eau ou d'assainissement"
+                },
+                "type_collectivite": {
+                    "type": "string",
+                    "description": "Type de collectivité"
+                },
+                "mode_gestion": {
+                    "type": "string",
+                    "description": "Mode de gestion"
+                },
+                "annee": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Année"
+                }
+            },
+            "title": "La liste des indicateurs par service pour une commune donnée  au format CSV",
+            "description": "La liste des indicateurs par service pour une commune donnée au format CSV"
+        },
+        "La liste des valeurs de l'indicateur par service": {
+            "type": "object",
+            "required": [
+                "annee"
+            ],
+            "properties": {
+                "code_service": {
+                    "type": "integer",
+                    "description": "Code du service"
+                },
+                "nom_service": {
+                    "type": "string",
+                    "description": "Nom du service"
+                },
+                "codes_commune": {
+                    "type": "array",
+                    "description": "Liste des codes INSEE communes",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "noms_commune": {
+                    "type": "array",
+                    "description": "Liste des noms de commune",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "numero_siren": {
+                    "type": "string",
+                    "description": "Numéro SIREN du service public d'eau ou d'assainissement"
+                },
+                "type_collectivite": {
+                    "type": "string",
+                    "description": "Type de collectivité"
+                },
+                "mode_gestion": {
+                    "type": "string",
+                    "description": "Mode de gestion"
+                },
+                "annee": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Année"
+                },
+                "indicateur": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Valeur de l'indicateur"
+                },
+                "uri_indicateur": {
+                    "type": "string",
+                    "description": "URI de l'indicateur"
+                }
+            },
+            "title": "La liste des valeurs de l'indicateur par service",
+            "description": "La liste des valeurs de l'indicateur par service"
+        },
+        "LineString": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "coordinates": {
+                    "type": "array",
+                    "items": {
+                        "originalRef": "LngLatAlt",
+                        "$ref": "#/definitions/LngLatAlt"
+                    }
+                },
+                "crs": {
+                    "originalRef": "Crs",
+                    "$ref": "#/definitions/Crs"
+                }
+            },
+            "title": "LineString"
+        },
+        "LngLatAlt": {
+            "type": "object",
+            "properties": {
+                "additionalElements": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "altitude": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "latitude": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "longitude": {
+                    "type": "number",
+                    "format": "double"
+                }
+            },
+            "title": "LngLatAlt"
+        },
+        "Message d'erreur": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "Code de l'erreur"
+                },
+                "message": {
+                    "type": "string",
+                    "description": "Message en rapport avec l'erreur"
+                },
+                "field_errors": {
+                    "type": "array",
+                    "description": "Liste des paramètres avec des erreurs",
+                    "items": {
+                        "originalRef": "Erreur",
+                        "$ref": "#/definitions/Erreur"
+                    }
+                }
+            },
+            "title": "Message d'erreur",
+            "description": "Message d'erreur"
+        },
+        "MultiLineString": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "coordinates": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "originalRef": "LngLatAlt",
+                            "$ref": "#/definitions/LngLatAlt"
+                        }
+                    }
+                },
+                "crs": {
+                    "originalRef": "Crs",
+                    "$ref": "#/definitions/Crs"
+                }
+            },
+            "title": "MultiLineString"
+        },
+        "MultiPoint": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "coordinates": {
+                    "type": "array",
+                    "items": {
+                        "originalRef": "LngLatAlt",
+                        "$ref": "#/definitions/LngLatAlt"
+                    }
+                },
+                "crs": {
+                    "originalRef": "Crs",
+                    "$ref": "#/definitions/Crs"
+                }
+            },
+            "title": "MultiPoint"
+        },
+        "MultiPolygon": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "coordinates": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "originalRef": "LngLatAlt",
+                                "$ref": "#/definitions/LngLatAlt"
+                            }
+                        }
+                    }
+                },
+                "crs": {
+                    "originalRef": "Crs",
+                    "$ref": "#/definitions/Crs"
+                }
+            },
+            "title": "MultiPolygon"
+        },
+        "Niveau d'un service par commune": {
+            "type": "object",
+            "required": [
+                "annee",
+                "code_commune_insee"
+            ],
+            "properties": {
+                "code_commune_insee": {
+                    "type": "string",
+                    "description": "Code commune INSEE"
+                },
+                "nom_commune": {
+                    "type": "string",
+                    "description": "Nom de la commune"
+                },
+                "codes_service": {
+                    "type": "array",
+                    "description": "Liste des codes de service",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "noms_service": {
+                    "type": "array",
+                    "description": "Liste des noms de service",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "annee": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Année"
+                },
+                "indicateurs": {
+                    "type": "object",
+                    "description": "Valeurs des indicateurs,  cf la liste des indicateurs http://www.services.eaufrance.fr/docs/indicateurs/Liste_des_indicateurs_de_performance.pdf",
+                    "additionalProperties": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "geometry": {
+                    "description": "Géometrie de la commune (attribut présent si le paramètre dans l'API geometrie=true)",
+                    "originalRef": "MultiPolygon",
+                    "$ref": "#/definitions/MultiPolygon"
+                },
+                "details": {
+                    "type": "array",
+                    "description": "Le détail par service, lorsqu'une commune à plusieurs services ou un service est partagé par plusieurs communes (attribut présent si le paramètre dans l'API detail_service=true)",
+                    "items": {
+                        "originalRef": "La liste des indicateurs par service pour une commune donnée",
+                        "$ref": "#/definitions/La liste des indicateurs par service pour une commune donnée"
+                    }
+                }
+            },
+            "title": "Niveau d'un service par commune",
+            "description": "Niveau d'un service par commune"
+        },
+        "Niveau d'un service par commune au format CSV": {
+            "type": "object",
+            "required": [
+                "annee",
+                "code_commune_insee"
+            ],
+            "properties": {
+                "ac_D204_0": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MAX_D204_0": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MAX_P201_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MAX_P203_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MAX_P204_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MAX_P205_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MAX_P258_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MAX_VP_023": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MAX_VP_176": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MAX_VP_177": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MAX_VP_178": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MAX_VP_179": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MAX_VP_186": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MAX_VP_190": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MAX_VP_191": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MAX_VP_228": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MAX_VP_229": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MIN_D204_0": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MIN_P201_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MIN_P203_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MIN_P204_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MIN_P205_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MIN_P258_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MIN_VP_023": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MIN_VP_176": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MIN_VP_177": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MIN_VP_178": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MIN_VP_179": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MIN_VP_186": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MIN_VP_190": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MIN_VP_191": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MIN_VP_228": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MIN_VP_229": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MOY_D204_0": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MOY_P201_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MOY_P203_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MOY_P204_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MOY_P205_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MOY_P258_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MOY_VP_023": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MOY_VP_176": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MOY_VP_177": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MOY_VP_178": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MOY_VP_179": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MOY_VP_186": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MOY_VP_190": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MOY_VP_191": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MOY_VP_228": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_MOY_VP_229": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_P201_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_P203_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_P204_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_P205_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_P258_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_023": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_176": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_177": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_178": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_179": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_186": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_190": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_191": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_228": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "ac_VP_229": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_D102_0": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_D151_0": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_DC_192": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_D102_0": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_D151_0": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_DC_192": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_P101_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_P101_1A": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_P101_1B": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_P102_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_P102_1A": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_P102_1B": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_P104_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_P106_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_P107_2": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_P108_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_P151_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_P152_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_P155_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_VP_061": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_VP_177": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_VP_178": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_VP_179": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_VP_190": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_VP_191": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_VP_228": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MAX_VP_231": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_D102_0": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_D151_0": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_DC_192": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_P101_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_P101_1A": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_P101_1B": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_P102_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_P102_1A": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_P102_1B": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_P104_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_P106_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_P107_2": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_P108_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_P151_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_P152_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_P155_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_VP_061": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_VP_177": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_VP_178": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_VP_179": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_VP_190": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_VP_191": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_VP_228": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MIN_VP_231": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_D102_0": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_D151_0": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_DC_192": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_P101_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_P101_1A": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_P101_1B": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_P102_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_P102_1A": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_P102_1B": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_P104_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_P106_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_P107_2": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_P108_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_P151_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_P152_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_P155_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_VP_061": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_VP_177": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_VP_178": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_VP_179": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_VP_190": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_VP_191": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_VP_228": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_MOY_VP_231": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P101_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P101_1A": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P101_1B": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P102_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P102_1A": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P102_1B": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P104_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P106_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P107_2": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P108_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P151_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P152_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_P155_1": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_061": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_177": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_178": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_179": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_190": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_191": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_228": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "aep_VP_231": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_DC_196": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_DC_197": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_MAX_DC_196": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_MAX_DC_197": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_MAX_P301_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_MAX_VP_168": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_MAX_VP_169": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_MAX_VP_230": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_MIN_DC_196": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_MIN_DC_197": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_MIN_P301_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_MIN_VP_168": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_MIN_VP_169": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_MIN_VP_230": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_MOY_DC_196": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_MOY_DC_197": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_MOY_P301_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_MOY_VP_168": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_MOY_VP_169": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_MOY_VP_230": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_P301_3": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_VP_168": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_VP_169": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "anc_VP_230": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "code_commune_insee": {
+                    "type": "string",
+                    "description": "Code commune INSEE"
+                },
+                "nom_commune": {
+                    "type": "string",
+                    "description": "Nom de la commune"
+                },
+                "codes_service": {
+                    "type": "array",
+                    "description": "Liste des codes de service",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "noms_service": {
+                    "type": "array",
+                    "description": "Liste des noms de service",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "annee": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Année"
+                }
+            },
+            "title": "Niveau d'un service par commune au format CSV",
+            "description": "Niveau d'un service par commune au format CSV"
+        },
+        "Point": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "coordinates": {
+                    "originalRef": "LngLatAlt",
+                    "$ref": "#/definitions/LngLatAlt"
+                },
+                "crs": {
+                    "originalRef": "Crs",
+                    "$ref": "#/definitions/Crs"
+                }
+            },
+            "title": "Point"
+        },
+        "Polygon": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "coordinates": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "originalRef": "LngLatAlt",
+                            "$ref": "#/definitions/LngLatAlt"
+                        }
+                    }
+                },
+                "crs": {
+                    "originalRef": "Crs",
+                    "$ref": "#/definitions/Crs"
+                }
+            },
+            "title": "Polygon"
+        },
+        "Résultat d'une rêquete sur les indicateurs par service": {
+            "type": "object",
+            "required": [
+                "api_version",
+                "count",
+                "data",
+                "first",
+                "last",
+                "next",
+                "prev"
+            ],
+            "properties": {
+                "count": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Le nombre total de résultat"
+                },
+                "first": {
+                    "type": "string",
+                    "description": "URL de la 1er page des résultats"
+                },
+                "last": {
+                    "type": "string",
+                    "description": "URL de la dernière page des résultats (non disponible quand la pagination utilise un curseur)"
+                },
+                "prev": {
+                    "type": "string",
+                    "description": "URL de la page précédente"
+                },
+                "next": {
+                    "type": "string",
+                    "description": "URL de la page suivante"
+                },
+                "api_version": {
+                    "type": "string",
+                    "description": "Version de l'API (https://semver.org/)"
+                },
+                "data": {
+                    "type": "array",
+                    "description": "Les résultats de la requête sous forme de liste",
+                    "items": {
+                        "originalRef": "La liste des valeurs de l'indicateur par service",
+                        "$ref": "#/definitions/La liste des valeurs de l'indicateur par service"
+                    }
+                }
+            },
+            "title": "Résultat d'une rêquete sur les indicateurs par service",
+            "description": "Résultat d'une rêquete sur les indicateurs par service"
+        },
+        "Résultat d'une rêquete sur les indicateurs par service pour une commune donné": {
+            "type": "object",
+            "required": [
+                "api_version",
+                "count",
+                "data",
+                "first",
+                "last",
+                "next",
+                "prev"
+            ],
+            "properties": {
+                "count": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Le nombre total de résultat"
+                },
+                "first": {
+                    "type": "string",
+                    "description": "URL de la 1er page des résultats"
+                },
+                "last": {
+                    "type": "string",
+                    "description": "URL de la dernière page des résultats (non disponible quand la pagination utilise un curseur)"
+                },
+                "prev": {
+                    "type": "string",
+                    "description": "URL de la page précédente"
+                },
+                "next": {
+                    "type": "string",
+                    "description": "URL de la page suivante"
+                },
+                "api_version": {
+                    "type": "string",
+                    "description": "Version de l'API (https://semver.org/)"
+                },
+                "data": {
+                    "type": "array",
+                    "description": "Les résultats de la requête sous forme de liste",
+                    "items": {
+                        "originalRef": "La liste des indicateurs par service pour une commune donnée",
+                        "$ref": "#/definitions/La liste des indicateurs par service pour une commune donnée"
+                    }
+                }
+            },
+            "title": "Résultat d'une rêquete sur les indicateurs par service pour une commune donné",
+            "description": "Résultat d'une rêquete sur les indicateurs par service pour une commune donné"
+        },
+        "Résultat d'une rêquete sur les services par commune": {
+            "type": "object",
+            "required": [
+                "api_version",
+                "count",
+                "data",
+                "first",
+                "last",
+                "next",
+                "prev"
+            ],
+            "properties": {
+                "count": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Le nombre total de résultat"
+                },
+                "first": {
+                    "type": "string",
+                    "description": "URL de la 1er page des résultats"
+                },
+                "last": {
+                    "type": "string",
+                    "description": "URL de la dernière page des résultats (non disponible quand la pagination utilise un curseur)"
+                },
+                "prev": {
+                    "type": "string",
+                    "description": "URL de la page précédente"
+                },
+                "next": {
+                    "type": "string",
+                    "description": "URL de la page suivante"
+                },
+                "api_version": {
+                    "type": "string",
+                    "description": "Version de l'API (https://semver.org/)"
+                },
+                "data": {
+                    "type": "array",
+                    "description": "Les résultats de la requête sous forme de liste",
+                    "items": {
+                        "originalRef": "Niveau d'un service par commune",
+                        "$ref": "#/definitions/Niveau d'un service par commune"
+                    }
+                }
+            },
+            "title": "Résultat d'une rêquete sur les services par commune",
+            "description": "Résultat d'une rêquete sur les services par commune"
+        }
+    }
+}

@@ -1,0 +1,2747 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Adresse de la documentation http://hubeau.eaufrance.fr/page/api-qualite-nappes",
+        "version": "1.2.1",
+        "title": "API Hub'Eau - Qualité des nappes d'eau souterraines",
+        "contact": {},
+        "license": {}
+    },
+    "host": "hubeau.eaufrance.fr",
+    "basePath": "/api",
+    "tags": [
+        {
+            "name": "qualite-nappes",
+            "description": "Opérations sur le qualité des nappes"
+        }
+    ],
+    "paths": {
+        "/v1/qualite_nappes/analyses": {
+            "get": {
+                "tags": [
+                    "qualite-nappes"
+                ],
+                "summary": "Lister les analyses",
+                "description": "Ce service permet de lister les mesures de qualité d'une station.Source de données : banque nationale d'Accès aux Données sur les Eaux Souterraines (ADES) http://www.ades.eaufrance.fr/La taille de page par défaut : 5000, taille max de la page : 20000.La profondeur d'accès aux résultats est : 20000, calcul de la profondeur = numéro de la page * nombre maximum de résultats dans une page.",
+                "operationId": "analyses",
+                "produces": [
+                    "application/json",
+                    "application/javascript;charset=UTF-8"
+                ],
+                "parameters": [
+                    {
+                        "name": "bbox",
+                        "in": "query",
+                        "description": "Rectangle d'emprise de l'objet demandé, emprise au format : min longitude, min latitude, max longitude, max latitude avec les coordonnées en WGS84 (EPSG:4326), le point doit être utilisé comme séparateur décimal, exemple : 1.6194,47.7965,2.1910,47.9988",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "number",
+                            "format": "double"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "bss_id",
+                        "in": "query",
+                        "description": "Code(s) national de la station (ancien code BSS ou nouveau code BSS, plus d'info ici http://infoterre.brgm.fr/nouveau-code-bss), si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "default": "BSS000XUUM"
+                    },
+                    {
+                        "name": "code_bassin_dce",
+                        "in": "query",
+                        "description": "Code(s) du bassin DCE, si plusieurs code, séparer les codes par une virgule, le nombre maximum de code est 50",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_circonscription_administrative_bassin",
+                        "in": "query",
+                        "description": "Code(s) de la circonscription administrative de bassin concernée, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 20",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_entite_hg_bdlisa",
+                        "in": "query",
+                        "description": "Code(s) entité(s) hydrogéologique dans le référentiel bdlisa, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_fraction",
+                        "in": "query",
+                        "description": "Code(s) de la fraction analysée, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_groupe_parametre",
+                        "in": "query",
+                        "description": "Code(s) du groupe de paramètres, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 100",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_insee_actuel",
+                        "in": "query",
+                        "description": "Code(s) insee actuel de la commune où se trouve la station, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_lieu_analyse",
+                        "in": "query",
+                        "description": "Code lieu analyse",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "code_masse_eau_edl",
+                        "in": "query",
+                        "description": "Code(s) masse(s) d'eau de type Etat des lieux, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_masse_eau_rap",
+                        "in": "query",
+                        "description": "Code(s) masse(s) d'eau de type Rapportage, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_methode",
+                        "in": "query",
+                        "description": "Code(s) de la méthode d'analyse, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_param",
+                        "in": "query",
+                        "description": "Code(s) du paramètre, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_producteur",
+                        "in": "query",
+                        "description": "Code(s) du producteur de données, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 20",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_qualification",
+                        "in": "query",
+                        "description": "Code(s) qualification du résultat, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_region",
+                        "in": "query",
+                        "description": "Code(s) nouvelle région, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 50",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_remarque_analyse",
+                        "in": "query",
+                        "description": "Code(s) remarque, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_reseau",
+                        "in": "query",
+                        "description": "Code(s) des réseaux de mesure concernés, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 50",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_statut_analyse",
+                        "in": "query",
+                        "description": "Code(s) statut de l'analyse qualité eau souterraine, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_type_point_eau",
+                        "in": "query",
+                        "description": "Code type de point d'eau (qualitomètre ou piézomètre)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "code_type_qualito",
+                        "in": "query",
+                        "description": "Code(s) du type de qualitomètre, séparer les codes par une virgule, le nombre maximum de code est 2",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_unite",
+                        "in": "query",
+                        "description": "Code de l'unité",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "date_debut_prelevement",
+                        "in": "query",
+                        "description": "Date de début du prélèvement (format yyyy-MM-dd)",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "date_fin_prelevement",
+                        "in": "query",
+                        "description": "Date de fin du prélèvement (format yyyy-MM-dd)",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "date_max_maj",
+                        "in": "query",
+                        "description": "Date max de mise à jour de l'analyse (format yyyy-MM-dd)",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "date_min_maj",
+                        "in": "query",
+                        "description": "Date min de mise à jour de l'analyse (format yyyy-MM-dd)",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Liste des champs souhaités dans la réponse (fonctionnalité expérimentale), par exemple fields=code_station,localisation",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "nom_bassin_dce",
+                        "in": "query",
+                        "description": "Nom(s) du bassin DCE, si plusieurs nom, séparer les noms par une virgule, le nombre maximum de nom est 50",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_circonscription_administrative_bassin",
+                        "in": "query",
+                        "description": "Nom(s) de la circonscription administrative de bassin concernée, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 20",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_commune_actuel",
+                        "in": "query",
+                        "description": "Nom(s) actuel de la commune où se trouve la station, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_departement",
+                        "in": "query",
+                        "description": "Nom(s) du département, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 100",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_entite_hg_bdlisa",
+                        "in": "query",
+                        "description": "Nom(s) entité(s) hydrogéologique dans le référentiel bdlisa, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_fraction",
+                        "in": "query",
+                        "description": "Nom(s) de la fraction analysée, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_groupe_parametre",
+                        "in": "query",
+                        "description": "Nom(s) du groupe de paramètres, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 100",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_lieu_analyse",
+                        "in": "query",
+                        "description": "Nom lieu analyse",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "nom_masse_eau_edl",
+                        "in": "query",
+                        "description": "Nom(s) masse(s) d'eau de type Etat des lieux, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_masse_eau_rap",
+                        "in": "query",
+                        "description": "Nom(s) masse(s) d'eau de type Rapportage, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_methode",
+                        "in": "query",
+                        "description": "Nom(s) de la méthode d'analyse, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de noms est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_qualification",
+                        "in": "query",
+                        "description": "Nom(s) qualification du résultat, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_region",
+                        "in": "query",
+                        "description": "Nom(s) nouvelle région, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 50",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_remarque_analyse",
+                        "in": "query",
+                        "description": "Nom(s) remarque, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de noms est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_reseau",
+                        "in": "query",
+                        "description": "Nom(s) des réseaux de mesure concernés, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 50",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_statut_analyse",
+                        "in": "query",
+                        "description": "Nom(s) Statut de l'analyse qualité eau souterraine, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_type_point_eau",
+                        "in": "query",
+                        "description": "Nom type de point d'eau (qualitomètre ou piézomètre)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "nom_type_qualito",
+                        "in": "query",
+                        "description": "Nom(s) du type de qualitomètre, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 2",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_unite",
+                        "in": "query",
+                        "description": "Nom de l'unité",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "num_departement",
+                        "in": "query",
+                        "description": "Code(s) du département, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 100",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Numéro de la page",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "resultat_max",
+                        "in": "query",
+                        "description": "Valeur maximale du résultat de l'analyse",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "resultat_min",
+                        "in": "query",
+                        "description": "Valeur minimale du résultat de l'analyse",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Nombre maximum de résultats dans une page",
+                        "required": false,
+                        "type": "integer",
+                        "default": 20,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Ordre de tri (asc ou desc) sur la date de prélèvement",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "asc",
+                            "desc"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK, tous les résultats sont présents dans la réponse",
+                        "schema": {
+                            "$ref": "#/definitions/Résultat d'une rêquete sur les analyses",
+                            "originalRef": "Résultat d'une rêquete sur les analyses"
+                        }
+                    },
+                    "206": {
+                        "description": "OK, il reste des résultats",
+                        "schema": {
+                            "$ref": "#/definitions/Résultat d'une rêquete sur les analyses",
+                            "originalRef": "Résultat d'une rêquete sur les analyses"
+                        }
+                    },
+                    "400": {
+                        "description": "Requête incorrecte",
+                        "schema": {
+                            "$ref": "#/definitions/Message d'erreur",
+                            "originalRef": "Message d'erreur"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/v1/qualite_nappes/analyses.csv": {
+            "get": {
+                "tags": [
+                    "qualite-nappes"
+                ],
+                "summary": "Lister les analyses au format CSV",
+                "description": "Ce service permet de lister les mesures de qualité d'une station.Source de données : banque nationale d'Accès aux Données sur les Eaux Souterraines (ADES) http://www.ades.eaufrance.fr/La taille de page par défaut : 5000, taille max de la page : 20000.La profondeur d'accès aux résultats est : 20000, calcul de la profondeur = numéro de la page * nombre maximum de résultats dans une page.",
+                "operationId": "analyses csv",
+                "produces": [
+                    "text/csv"
+                ],
+                "parameters": [
+                    {
+                        "name": "bbox",
+                        "in": "query",
+                        "description": "Rectangle d'emprise de l'objet demandé, emprise au format : min longitude, min latitude, max longitude, max latitude avec les coordonnées en WGS84 (EPSG:4326), le point doit être utilisé comme séparateur décimal, exemple : 1.6194,47.7965,2.1910,47.9988",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "number",
+                            "format": "double"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "bss_id",
+                        "in": "query",
+                        "description": "Code(s) national de la station (ancien code BSS ou nouveau code BSS, plus d'info ici http://infoterre.brgm.fr/nouveau-code-bss), si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "default": "BSS000XUUM"
+                    },
+                    {
+                        "name": "code_bassin_dce",
+                        "in": "query",
+                        "description": "Code(s) du bassin DCE, si plusieurs code, séparer les codes par une virgule, le nombre maximum de code est 50",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_circonscription_administrative_bassin",
+                        "in": "query",
+                        "description": "Code(s) de la circonscription administrative de bassin concernée, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 20",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_entite_hg_bdlisa",
+                        "in": "query",
+                        "description": "Code(s) entité(s) hydrogéologique dans le référentiel bdlisa, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_fraction",
+                        "in": "query",
+                        "description": "Code(s) de la fraction analysée, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_groupe_parametre",
+                        "in": "query",
+                        "description": "Code(s) du groupe de paramètres, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 100",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_insee_actuel",
+                        "in": "query",
+                        "description": "Code(s) insee actuel de la commune où se trouve la station, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_lieu_analyse",
+                        "in": "query",
+                        "description": "Code lieu analyse",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "code_masse_eau_edl",
+                        "in": "query",
+                        "description": "Code(s) masse(s) d'eau de type Etat des lieux, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_masse_eau_rap",
+                        "in": "query",
+                        "description": "Code(s) masse(s) d'eau de type Rapportage, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_methode",
+                        "in": "query",
+                        "description": "Code(s) de la méthode d'analyse, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_param",
+                        "in": "query",
+                        "description": "Code(s) du paramètre, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_producteur",
+                        "in": "query",
+                        "description": "Code(s) du producteur de données, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 20",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_qualification",
+                        "in": "query",
+                        "description": "Code(s) qualification du résultat, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_region",
+                        "in": "query",
+                        "description": "Code(s) nouvelle région, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 50",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_remarque_analyse",
+                        "in": "query",
+                        "description": "Code(s) remarque, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_reseau",
+                        "in": "query",
+                        "description": "Code(s) des réseaux de mesure concernés, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 50",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_statut_analyse",
+                        "in": "query",
+                        "description": "Code(s) statut de l'analyse qualité eau souterraine, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_type_point_eau",
+                        "in": "query",
+                        "description": "Code type de point d'eau (qualitomètre ou piézomètre)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "code_type_qualito",
+                        "in": "query",
+                        "description": "Code(s) du type de qualitomètre, séparer les codes par une virgule, le nombre maximum de code est 2",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_unite",
+                        "in": "query",
+                        "description": "Code de l'unité",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "date_debut_prelevement",
+                        "in": "query",
+                        "description": "Date de début du prélèvement (format yyyy-MM-dd)",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "date_fin_prelevement",
+                        "in": "query",
+                        "description": "Date de fin du prélèvement (format yyyy-MM-dd)",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "date_max_maj",
+                        "in": "query",
+                        "description": "Date max de mise à jour de l'analyse (format yyyy-MM-dd)",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "date_min_maj",
+                        "in": "query",
+                        "description": "Date min de mise à jour de l'analyse (format yyyy-MM-dd)",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Liste des champs souhaités dans la réponse (fonctionnalité expérimentale), par exemple fields=code_station,localisation",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "nom_bassin_dce",
+                        "in": "query",
+                        "description": "Nom(s) du bassin DCE, si plusieurs nom, séparer les noms par une virgule, le nombre maximum de nom est 50",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_circonscription_administrative_bassin",
+                        "in": "query",
+                        "description": "Nom(s) de la circonscription administrative de bassin concernée, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 20",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_commune_actuel",
+                        "in": "query",
+                        "description": "Nom(s) actuel de la commune où se trouve la station, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_departement",
+                        "in": "query",
+                        "description": "Nom(s) du département, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 100",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_entite_hg_bdlisa",
+                        "in": "query",
+                        "description": "Nom(s) entité(s) hydrogéologique dans le référentiel bdlisa, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_fraction",
+                        "in": "query",
+                        "description": "Nom(s) de la fraction analysée, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_groupe_parametre",
+                        "in": "query",
+                        "description": "Nom(s) du groupe de paramètres, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 100",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_lieu_analyse",
+                        "in": "query",
+                        "description": "Nom lieu analyse",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "nom_masse_eau_edl",
+                        "in": "query",
+                        "description": "Nom(s) masse(s) d'eau de type Etat des lieux, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_masse_eau_rap",
+                        "in": "query",
+                        "description": "Nom(s) masse(s) d'eau de type Rapportage, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_methode",
+                        "in": "query",
+                        "description": "Nom(s) de la méthode d'analyse, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de noms est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_qualification",
+                        "in": "query",
+                        "description": "Nom(s) qualification du résultat, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_region",
+                        "in": "query",
+                        "description": "Nom(s) nouvelle région, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 50",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_remarque_analyse",
+                        "in": "query",
+                        "description": "Nom(s) remarque, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de noms est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_reseau",
+                        "in": "query",
+                        "description": "Nom(s) des réseaux de mesure concernés, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 50",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_statut_analyse",
+                        "in": "query",
+                        "description": "Nom(s) Statut de l'analyse qualité eau souterraine, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 10",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_type_point_eau",
+                        "in": "query",
+                        "description": "Nom type de point d'eau (qualitomètre ou piézomètre)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "nom_type_qualito",
+                        "in": "query",
+                        "description": "Nom(s) du type de qualitomètre, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 2",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_unite",
+                        "in": "query",
+                        "description": "Nom de l'unité",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "num_departement",
+                        "in": "query",
+                        "description": "Code(s) du département, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 100",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Numéro de la page",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "resultat_max",
+                        "in": "query",
+                        "description": "Valeur maximale du résultat de l'analyse",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "resultat_min",
+                        "in": "query",
+                        "description": "Valeur minimale du résultat de l'analyse",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Nombre maximum de résultats dans une page",
+                        "required": false,
+                        "type": "integer",
+                        "default": 20,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Ordre de tri (asc ou desc) sur la date de prélèvement",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "asc",
+                            "desc"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK, tous les résultats sont présents dans la réponse",
+                        "schema": {
+                            "$ref": "#/definitions/Analyse de la qualité",
+                            "originalRef": "Analyse de la qualité"
+                        }
+                    },
+                    "206": {
+                        "description": "OK, il reste des résultats",
+                        "schema": {
+                            "$ref": "#/definitions/Analyse de la qualité",
+                            "originalRef": "Analyse de la qualité"
+                        }
+                    },
+                    "400": {
+                        "description": "Requête incorrecte",
+                        "schema": {
+                            "$ref": "#/definitions/Message d'erreur",
+                            "originalRef": "Message d'erreur"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/v1/qualite_nappes/stations": {
+            "get": {
+                "tags": [
+                    "qualite-nappes"
+                ],
+                "summary": "Lister les stations de mesure",
+                "description": "Ce service permet de rechercher les stations de mesure des qualités des nappes d'eau.Source de données : banque nationale d'Accès aux Données sur les Eaux Souterraines (ADES) http://www.ades.eaufrance.fr/La taille de page par défaut : 5000, taille max de la page : 20000.La profondeur d'accès aux résultats est : 20000, calcul de la profondeur = numéro de la page * nombre maximum de résultats dans une page.",
+                "operationId": "stations",
+                "produces": [
+                    "application/json",
+                    "application/vnd.geo+json",
+                    "application/javascript;charset=UTF-8"
+                ],
+                "parameters": [
+                    {
+                        "name": "bassin_dce",
+                        "in": "query",
+                        "description": "Nom(s) du bassin DCE, si plusieurs nom, séparer les noms par une virgule, le nombre maximum de nom est 50",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "bbox",
+                        "in": "query",
+                        "description": "Rectangle d'emprise de l'objet demandé, emprise au format : min longitude, min latitude, max longitude, max latitude avec les coordonnées en WGS84 (EPSG:4326), le point doit être utilisé comme séparateur décimal, exemple : 1.6194,47.7965,2.1910,47.9988",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "number",
+                            "format": "double"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "bss_id",
+                        "in": "query",
+                        "description": "Code(s) national de la station (ancien code BSS ou nouveau code BSS, plus d'info ici http://infoterre.brgm.fr/nouveau-code-bss), si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "default": "BSS000XUUM"
+                    },
+                    {
+                        "name": "circonscription_administrative_bassin",
+                        "in": "query",
+                        "description": "Nom(s) de la circonscription administrative de bassin concernée, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 20",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_commune",
+                        "in": "query",
+                        "description": "Code(s) insee actuel de la commune où se trouve la station, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_entite_hg_bdlisa",
+                        "in": "query",
+                        "description": "Code(s) entité(s) hydrogéologique dans le référentiel bdlisa, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_masse_eau_edl",
+                        "in": "query",
+                        "description": "Code(s) masse(s) d'eau de type Etat des lieux, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_masse_eau_rap",
+                        "in": "query",
+                        "description": "Code(s) masse(s) d'eau de type Rapportage, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "date_max_maj",
+                        "in": "query",
+                        "description": "Date max de mise à jour des informations de la station (format yyyy-MM-dd)",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "date_min_maj",
+                        "in": "query",
+                        "description": "Date min de mise à jour des informations de la station (format yyyy-MM-dd)",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Liste des champs souhaités dans la réponse (fonctionnalité expérimentale), par exemple fields=code_station,localisation",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "format",
+                        "in": "query",
+                        "description": "Format de réponse attendu. Supportés : json, geojson (défaut : json)",
+                        "required": false,
+                        "type": "string",
+                        "default": "json",
+                        "enum": [
+                            "json",
+                            "geojson"
+                        ]
+                    },
+                    {
+                        "name": "nom_entite_hg_bdlisa",
+                        "in": "query",
+                        "description": "Nom(s) entité(s) hydrogéologique dans le référentiel bdlisa, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_masse_eau_edl",
+                        "in": "query",
+                        "description": "Nom(s) masse(s) d'eau de type Etat des lieux, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_masse_eau_rap",
+                        "in": "query",
+                        "description": "Nom(s) masse(s) d'eau de type Rapportage, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_region",
+                        "in": "query",
+                        "description": "Nom(s) nouvelle région, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 50",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_reseau",
+                        "in": "query",
+                        "description": "Nom(s) des réseaux de mesure concernés, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 50",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "num_departement",
+                        "in": "query",
+                        "description": "Code(s) du département, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 100",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Numéro de la page",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "prof_invest_max",
+                        "in": "query",
+                        "description": "Profondeur d'investigation maximale (m)",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "prof_invest_min",
+                        "in": "query",
+                        "description": "Profondeur d'investigation minimale (m)",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Nombre maximum de résultats dans une page",
+                        "required": false,
+                        "type": "integer",
+                        "default": 20,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "srid",
+                        "in": "query",
+                        "description": "Spatial Reference ID des coordonnées en sortie (srid supportés : 4326, 900913, 3857)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK, tous les résultats sont présents dans la réponse",
+                        "schema": {
+                            "$ref": "#/definitions/Résultat d'une rêquete sur les stations",
+                            "originalRef": "Résultat d'une rêquete sur les stations"
+                        }
+                    },
+                    "206": {
+                        "description": "OK, il reste des résultats",
+                        "schema": {
+                            "$ref": "#/definitions/Résultat d'une rêquete sur les stations",
+                            "originalRef": "Résultat d'une rêquete sur les stations"
+                        }
+                    },
+                    "400": {
+                        "description": "Requête incorrecte",
+                        "schema": {
+                            "$ref": "#/definitions/Message d'erreur",
+                            "originalRef": "Message d'erreur"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/v1/qualite_nappes/stations.csv": {
+            "get": {
+                "tags": [
+                    "qualite-nappes"
+                ],
+                "summary": "Lister les stations de mesure au format CSV",
+                "description": "Ce service permet de rechercher les stations de mesure des qualités des nappes d'eau.Source de données : banque nationale d'Accès aux Données sur les Eaux Souterraines (ADES) http://www.ades.eaufrance.fr/La taille de page par défaut : 5000, taille max de la page : 20000.La profondeur d'accès aux résultats est : 20000, calcul de la profondeur = numéro de la page * nombre maximum de résultats dans une page.",
+                "operationId": "stations csv",
+                "produces": [
+                    "text/csv"
+                ],
+                "parameters": [
+                    {
+                        "name": "bassin_dce",
+                        "in": "query",
+                        "description": "Nom(s) du bassin DCE, si plusieurs nom, séparer les noms par une virgule, le nombre maximum de nom est 50",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "bbox",
+                        "in": "query",
+                        "description": "Rectangle d'emprise de l'objet demandé, emprise au format : min longitude, min latitude, max longitude, max latitude avec les coordonnées en WGS84 (EPSG:4326), le point doit être utilisé comme séparateur décimal, exemple : 1.6194,47.7965,2.1910,47.9988",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "number",
+                            "format": "double"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "bss_id",
+                        "in": "query",
+                        "description": "Code(s) national de la station (ancien code BSS ou nouveau code BSS, plus d'info ici http://infoterre.brgm.fr/nouveau-code-bss), si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "default": "BSS000XUUM"
+                    },
+                    {
+                        "name": "circonscription_administrative_bassin",
+                        "in": "query",
+                        "description": "Nom(s) de la circonscription administrative de bassin concernée, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 20",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_commune",
+                        "in": "query",
+                        "description": "Code(s) insee actuel de la commune où se trouve la station, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_entite_hg_bdlisa",
+                        "in": "query",
+                        "description": "Code(s) entité(s) hydrogéologique dans le référentiel bdlisa, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_masse_eau_edl",
+                        "in": "query",
+                        "description": "Code(s) masse(s) d'eau de type Etat des lieux, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "code_masse_eau_rap",
+                        "in": "query",
+                        "description": "Code(s) masse(s) d'eau de type Rapportage, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "date_max_maj",
+                        "in": "query",
+                        "description": "Date max de mise à jour des informations de la station (format yyyy-MM-dd)",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "date_min_maj",
+                        "in": "query",
+                        "description": "Date min de mise à jour des informations de la station (format yyyy-MM-dd)",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Liste des champs souhaités dans la réponse (fonctionnalité expérimentale), par exemple fields=code_station,localisation",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "nom_entite_hg_bdlisa",
+                        "in": "query",
+                        "description": "Nom(s) entité(s) hydrogéologique dans le référentiel bdlisa, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_masse_eau_edl",
+                        "in": "query",
+                        "description": "Nom(s) masse(s) d'eau de type Etat des lieux, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_masse_eau_rap",
+                        "in": "query",
+                        "description": "Nom(s) masse(s) d'eau de type Rapportage, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de code est 200",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_region",
+                        "in": "query",
+                        "description": "Nom(s) nouvelle région, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 50",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "nom_reseau",
+                        "in": "query",
+                        "description": "Nom(s) des réseaux de mesure concernés, si plusieurs noms, séparer les noms par une virgule, le nombre maximum de nom est 50",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "num_departement",
+                        "in": "query",
+                        "description": "Code(s) du département, si plusieurs codes, séparer les codes par une virgule, le nombre maximum de code est 100",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Numéro de la page",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "prof_invest_max",
+                        "in": "query",
+                        "description": "Profondeur d'investigation maximale (m)",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "prof_invest_min",
+                        "in": "query",
+                        "description": "Profondeur d'investigation minimale (m)",
+                        "required": false,
+                        "type": "number",
+                        "format": "double"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Nombre maximum de résultats dans une page",
+                        "required": false,
+                        "type": "integer",
+                        "default": 20,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "srid",
+                        "in": "query",
+                        "description": "Spatial Reference ID des coordonnées en sortie (srid supportés : 4326, 900913, 3857)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK, tous les résultats sont présents dans la réponse",
+                        "schema": {
+                            "$ref": "#/definitions/Station de mesures de la qualité",
+                            "originalRef": "Station de mesures de la qualité"
+                        }
+                    },
+                    "206": {
+                        "description": "OK, il reste des résultats",
+                        "schema": {
+                            "$ref": "#/definitions/Station de mesures de la qualité",
+                            "originalRef": "Station de mesures de la qualité"
+                        }
+                    },
+                    "400": {
+                        "description": "Requête incorrecte",
+                        "schema": {
+                            "$ref": "#/definitions/Message d'erreur",
+                            "originalRef": "Message d'erreur"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                },
+                "deprecated": false
+            }
+        }
+    },
+    "definitions": {
+        "Analyse de la qualité": {
+            "type": "object",
+            "properties": {
+                "bss_id": {
+                    "type": "string",
+                    "description": "Nouveau code national de la station, cf plus d'info ici http://infoterre.brgm.fr/nouveau-code-bss"
+                },
+                "code_bss": {
+                    "type": "string",
+                    "description": "Ancien code de la station (code BSS)"
+                },
+                "urn_bss": {
+                    "type": "string",
+                    "description": "URN de la station"
+                },
+                "precision_coordonnees": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Précision des coordonnées sur cette station"
+                },
+                "longitude": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Longitude la station (WGS84)"
+                },
+                "latitude": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Latitude la station (WGS84)"
+                },
+                "altitude": {
+                    "type": "string",
+                    "description": "Altitude NGF de la station"
+                },
+                "code_insee_actuel": {
+                    "type": "string",
+                    "description": "Code insee de la commune actuel où se trouve la station"
+                },
+                "nom_commune_actuel": {
+                    "type": "string",
+                    "description": "Nom de la commune actuel où se trouve la station"
+                },
+                "num_departement": {
+                    "type": "string",
+                    "description": "Code du département"
+                },
+                "nom_departement": {
+                    "type": "string",
+                    "description": "Nom du département"
+                },
+                "code_region": {
+                    "type": "string",
+                    "description": "Code nouvelle région"
+                },
+                "nom_region": {
+                    "type": "string",
+                    "description": "Nom nouvelle région"
+                },
+                "code_circonscription_administrative_bassin": {
+                    "type": "string",
+                    "description": "Code de la circonscription administrative de bassin concernée"
+                },
+                "nom_circonscription_administrative_bassin": {
+                    "type": "string",
+                    "description": "Nom de la circonscription administrative de bassin concernée"
+                },
+                "code_bassin_dce": {
+                    "type": "string",
+                    "description": "Code bassin DCE"
+                },
+                "nom_bassin_dce": {
+                    "type": "string",
+                    "description": "Nom bassin DCE"
+                },
+                "urn_bassin_dce": {
+                    "type": "string",
+                    "description": "URN bassin DCE"
+                },
+                "code_type_point_eau": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Code du type de point d'eau (qualitomètre ou piézomètre)"
+                },
+                "nom_type_point_eau": {
+                    "type": "string",
+                    "description": "Nom du type de point d'eau (qualitomètre ou piézomètre)"
+                },
+                "codes_entite_hg_bdlisa": {
+                    "type": "array",
+                    "description": "Codes des entités hydrogéologiques liées au point d'eau dans le référentiel bdlisa",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "noms_entite_hg_bdlisa": {
+                    "type": "array",
+                    "description": "Noms des entités hydrogéologiques liées au point d'eau dans le référentiel bdlisa",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "urns_bdlisa": {
+                    "type": "array",
+                    "description": "URN des entités hydrogéologiques (BDLISA) actuellement associés à la station construit à partir des codes BDLISA, url vers les fiches PDF BDLISA ",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "codes_masse_eau_rap": {
+                    "type": "array",
+                    "description": "Codes des masses d'eau de type 'rapportage' liées au point d'eau",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "noms_masse_eau_rap": {
+                    "type": "array",
+                    "description": "Noms des masses d'eau de type 'rapportage' liées au point d'eau",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "urns_masse_eau_rap": {
+                    "type": "array",
+                    "description": "URN des masse d'eau RAP actuellement associés à la station construit à partir des codes masse d'eau, url vers le SANDRE",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "codes_masse_eau_edl": {
+                    "type": "array",
+                    "description": "Codes des masses d'eau de type 'état des lieux' liées au point d'eau",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "noms_masse_eau_edl": {
+                    "type": "array",
+                    "description": "Noms des masses d'eau de type 'état des lieux' liées au point d'eau",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "urns_masse_eau_edl": {
+                    "type": "array",
+                    "description": "URN des masse d'eau EDL actuellement associés à la station construit à partir des codes masse d'eau, url vers le SANDRE",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "codes_reseau": {
+                    "type": "array",
+                    "description": "Codes des réseaux de mesure concernés",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "noms_reseau": {
+                    "type": "array",
+                    "description": "Noms des réseaux de mesure concernés",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "uris_reseau": {
+                    "type": "array",
+                    "description": "URI des réseaux associés à la station construit à partir des codes réseau, url vers le SANDRE",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "code_type_qualito": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Code du type de qualitomètre"
+                },
+                "nom_type_qualito": {
+                    "type": "string",
+                    "description": "Nom du type de qualitomètre"
+                },
+                "uri_type_qualito": {
+                    "type": "string",
+                    "description": "URI du type de qualitomètre"
+                },
+                "code_producteur": {
+                    "type": "string",
+                    "description": "Code du producteur de données"
+                },
+                "nom_producteur": {
+                    "type": "string",
+                    "description": "Nom du producteur de données"
+                },
+                "uri_producteur": {
+                    "type": "string",
+                    "description": "URI du producteur de données"
+                },
+                "date_debut_prelevement": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2016-12-01",
+                    "description": "Date de début du prélèvement"
+                },
+                "code_param": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Code du paramètre"
+                },
+                "uri_param": {
+                    "type": "string",
+                    "description": "URI du paramètre"
+                },
+                "nom_param": {
+                    "type": "string",
+                    "description": "Nom du paramètre"
+                },
+                "code_fraction": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Code de la fraction analysée"
+                },
+                "nom_fraction": {
+                    "type": "string",
+                    "description": "Nom de la fraction analysée"
+                },
+                "uri_fraction": {
+                    "type": "string",
+                    "description": "URI de la fraction analysée"
+                },
+                "resultat": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Résultat minimal de l'analyse"
+                },
+                "code_remarque_analyse": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Code de la remarque analyse"
+                },
+                "nom_remarque_analyse": {
+                    "type": "string",
+                    "description": "Nom de la remarque analyse"
+                },
+                "uri_remarque_analyse": {
+                    "type": "string",
+                    "description": "URI de la remarque analyse"
+                },
+                "code_lieu_analyse": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Code du lieu de l'analyse"
+                },
+                "nom_lieu_analyse": {
+                    "type": "string",
+                    "description": "Nom du lieu de l'analyse"
+                },
+                "uri_lieu_analyse": {
+                    "type": "string",
+                    "description": "URI du lieu de l'analyse"
+                },
+                "code_methode": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Code de la méthode d'analyse"
+                },
+                "uri_methode": {
+                    "type": "string",
+                    "description": "URI de la méthode d'analyse"
+                },
+                "nom_methode": {
+                    "type": "string",
+                    "description": "Nom de la méthode d'analyse"
+                },
+                "code_unite": {
+                    "type": "string",
+                    "description": "Code de l'unité"
+                },
+                "nom_unite": {
+                    "type": "string",
+                    "description": "Nom de l'unité"
+                },
+                "uri_unite": {
+                    "type": "string",
+                    "description": "URI de l'unité"
+                },
+                "symbole_unite": {
+                    "type": "string",
+                    "description": "Symbole de l'unité"
+                },
+                "code_statut_analyse": {
+                    "type": "string",
+                    "description": "Code du statut de l'analyse"
+                },
+                "nom_statut_analyse": {
+                    "type": "string",
+                    "description": "Nom du statut de l'analyse"
+                },
+                "uri_statut_analyse": {
+                    "type": "string",
+                    "description": "URI du statut de l'analyse"
+                },
+                "code_qualification": {
+                    "type": "string",
+                    "description": "Code de la qualification du résultat"
+                },
+                "nom_qualification": {
+                    "type": "string",
+                    "description": "Nom de la qualification du résultat"
+                },
+                "uri_qualification": {
+                    "type": "string",
+                    "description": "URI de la qualification du résultat"
+                },
+                "limite_quantification": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Limite de quantification"
+                },
+                "limite_detection": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Limite de détection"
+                },
+                "seuil_saturation": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Seuil de saturation"
+                },
+                "incertitude_analytique": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Incertitude analytique"
+                },
+                "codes_groupe_parametre": {
+                    "type": "array",
+                    "description": "Codes du groupe de paramètres",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "uris_groupe_parametre": {
+                    "type": "array",
+                    "description": "URIs du groupe de paramètres",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "noms_groupe_parametre": {
+                    "type": "array",
+                    "description": "Noms du groupe de paramètres",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "title": "Analyse de la qualité",
+            "description": "Analyse de la qualité"
+        },
+        "Crs": {
+            "type": "object",
+            "properties": {
+                "properties": {
+                    "type": "object"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "name",
+                        "link"
+                    ]
+                }
+            },
+            "title": "Crs"
+        },
+        "Erreur": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "Code de l'erreur"
+                },
+                "message": {
+                    "type": "string",
+                    "description": "Message en rapport avec l'erreur sur le paramètre"
+                },
+                "field": {
+                    "type": "string",
+                    "description": "Le nom du paramètre avec l'erreur"
+                }
+            },
+            "title": "Erreur",
+            "description": "Erreur"
+        },
+        "Feature": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "crs": {
+                    "$ref": "#/definitions/Crs",
+                    "originalRef": "Crs"
+                },
+                "geometry": {
+                    "$ref": "#/definitions/GeoJsonObject",
+                    "originalRef": "GeoJsonObject"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "properties": {
+                    "type": "object"
+                }
+            },
+            "title": "Feature"
+        },
+        "FeatureCollection": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "crs": {
+                    "$ref": "#/definitions/Crs",
+                    "originalRef": "Crs"
+                },
+                "features": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Feature",
+                        "originalRef": "Feature"
+                    }
+                }
+            },
+            "title": "FeatureCollection"
+        },
+        "GeometryCollection": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "crs": {
+                    "$ref": "#/definitions/Crs",
+                    "originalRef": "Crs"
+                },
+                "geometries": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GeoJsonObject",
+                        "originalRef": "GeoJsonObject"
+                    }
+                }
+            },
+            "title": "GeometryCollection"
+        },
+        "LineString": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "coordinates": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LngLatAlt",
+                        "originalRef": "LngLatAlt"
+                    }
+                },
+                "crs": {
+                    "$ref": "#/definitions/Crs",
+                    "originalRef": "Crs"
+                }
+            },
+            "title": "LineString"
+        },
+        "LngLatAlt": {
+            "type": "object",
+            "properties": {
+                "additionalElements": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "altitude": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "latitude": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "longitude": {
+                    "type": "number",
+                    "format": "double"
+                }
+            },
+            "title": "LngLatAlt"
+        },
+        "Message d'erreur": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "Code de l'erreur"
+                },
+                "message": {
+                    "type": "string",
+                    "description": "Message en rapport avec l'erreur"
+                },
+                "field_errors": {
+                    "type": "array",
+                    "description": "Liste des paramètres avec des erreurs",
+                    "items": {
+                        "$ref": "#/definitions/Erreur",
+                        "originalRef": "Erreur"
+                    }
+                }
+            },
+            "title": "Message d'erreur",
+            "description": "Message d'erreur"
+        },
+        "MultiLineString": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "coordinates": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/LngLatAlt",
+                            "originalRef": "LngLatAlt"
+                        }
+                    }
+                },
+                "crs": {
+                    "$ref": "#/definitions/Crs",
+                    "originalRef": "Crs"
+                }
+            },
+            "title": "MultiLineString"
+        },
+        "MultiPoint": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "coordinates": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LngLatAlt",
+                        "originalRef": "LngLatAlt"
+                    }
+                },
+                "crs": {
+                    "$ref": "#/definitions/Crs",
+                    "originalRef": "Crs"
+                }
+            },
+            "title": "MultiPoint"
+        },
+        "MultiPolygon": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "coordinates": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/LngLatAlt",
+                                "originalRef": "LngLatAlt"
+                            }
+                        }
+                    }
+                },
+                "crs": {
+                    "$ref": "#/definitions/Crs",
+                    "originalRef": "Crs"
+                }
+            },
+            "title": "MultiPolygon"
+        },
+        "Point": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "coordinates": {
+                    "$ref": "#/definitions/LngLatAlt",
+                    "originalRef": "LngLatAlt"
+                },
+                "crs": {
+                    "$ref": "#/definitions/Crs",
+                    "originalRef": "Crs"
+                }
+            },
+            "title": "Point"
+        },
+        "Polygon": {
+            "type": "object",
+            "properties": {
+                "bbox": {
+                    "type": "array",
+                    "items": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "coordinates": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/LngLatAlt",
+                            "originalRef": "LngLatAlt"
+                        }
+                    }
+                },
+                "crs": {
+                    "$ref": "#/definitions/Crs",
+                    "originalRef": "Crs"
+                }
+            },
+            "title": "Polygon"
+        },
+        "Résultat d'une rêquete sur les analyses": {
+            "type": "object",
+            "required": [
+                "api_version",
+                "count",
+                "data",
+                "first",
+                "last",
+                "next",
+                "prev"
+            ],
+            "properties": {
+                "count": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Le nombre total de résultat"
+                },
+                "first": {
+                    "type": "string",
+                    "description": "URL de la 1er page des résultats"
+                },
+                "last": {
+                    "type": "string",
+                    "description": "URL de la dernière page des résultats (non disponible quand la pagination utilise un curseur)"
+                },
+                "prev": {
+                    "type": "string",
+                    "description": "URL de la page précédente"
+                },
+                "next": {
+                    "type": "string",
+                    "description": "URL de la page suivante"
+                },
+                "api_version": {
+                    "type": "string",
+                    "description": "Version de l'API (https://semver.org/)"
+                },
+                "data": {
+                    "type": "array",
+                    "description": "Les résultats de la requête sous forme de liste",
+                    "items": {
+                        "$ref": "#/definitions/Analyse de la qualité",
+                        "originalRef": "Analyse de la qualité"
+                    }
+                }
+            },
+            "title": "Résultat d'une rêquete sur les analyses",
+            "description": "Résultat d'une rêquete sur les analyses"
+        },
+        "Résultat d'une rêquete sur les stations": {
+            "type": "object",
+            "required": [
+                "api_version",
+                "count",
+                "data",
+                "first",
+                "last",
+                "next",
+                "prev"
+            ],
+            "properties": {
+                "count": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Le nombre total de résultat"
+                },
+                "first": {
+                    "type": "string",
+                    "description": "URL de la 1er page des résultats"
+                },
+                "last": {
+                    "type": "string",
+                    "description": "URL de la dernière page des résultats (non disponible quand la pagination utilise un curseur)"
+                },
+                "prev": {
+                    "type": "string",
+                    "description": "URL de la page précédente"
+                },
+                "next": {
+                    "type": "string",
+                    "description": "URL de la page suivante"
+                },
+                "api_version": {
+                    "type": "string",
+                    "description": "Version de l'API (https://semver.org/)"
+                },
+                "data": {
+                    "type": "array",
+                    "description": "Les résultats de la requête sous forme de liste",
+                    "items": {
+                        "$ref": "#/definitions/Station de mesures de la qualité",
+                        "originalRef": "Station de mesures de la qualité"
+                    }
+                }
+            },
+            "title": "Résultat d'une rêquete sur les stations",
+            "description": "Résultat d'une rêquete sur les stations"
+        },
+        "Station de mesures de la qualité": {
+            "type": "object",
+            "properties": {
+                "bss_id": {
+                    "type": "string",
+                    "description": "Nouveau code national de la station, cf plus d'info ici http://infoterre.brgm.fr/nouveau-code-bss"
+                },
+                "code_bss": {
+                    "type": "string",
+                    "description": "Ancien code de la station (code BSS)"
+                },
+                "urn_bss": {
+                    "type": "string",
+                    "description": "URN de la station"
+                },
+                "date_debut_mesure": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2016-12-01",
+                    "description": "Date de début des mesures qualité sur cette station"
+                },
+                "date_fin_mesure": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2016-12-01",
+                    "description": "Dernière date de mesure qualité connue pour sur cette station "
+                },
+                "precision_coordonnees": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Précision des coordonnées sur cette station"
+                },
+                "longitude": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Longitude la station (WGS84)"
+                },
+                "latitude": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Latitude la station (WGS84)"
+                },
+                "altitude": {
+                    "type": "string",
+                    "description": "Altitude NGF de la station"
+                },
+                "code_insee": {
+                    "type": "string",
+                    "description": "Code insee de la commune où se trouve la station"
+                },
+                "nom_commune": {
+                    "type": "string",
+                    "description": "Nom de la commune où se trouve la station"
+                },
+                "num_departement": {
+                    "type": "string",
+                    "description": "Code du département où se trouve la station"
+                },
+                "nom_departement": {
+                    "type": "string",
+                    "description": "Nom du département où se trouve la station"
+                },
+                "nom_region": {
+                    "type": "string",
+                    "description": "Nom nouvelle région où se trouve la station"
+                },
+                "circonscriptions_administrative_bassin": {
+                    "type": "array",
+                    "description": "Circonscription administrative de bassin concernée",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "bassin_dce": {
+                    "type": "string",
+                    "description": "Bassin DCE"
+                },
+                "urn_bassin_dce": {
+                    "type": "string",
+                    "description": "URN du bassin DCE"
+                },
+                "code_nature_pe": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Code de la nature du point d'eau (forage, puits, source)"
+                },
+                "nom_nature_pe": {
+                    "type": "string",
+                    "description": "Nom de la nature du point d'eau (forage, puits, source)"
+                },
+                "uri_nature_pe": {
+                    "type": "string",
+                    "description": "URI de la nature du point d'eau (forage, puits, source)"
+                },
+                "libelle_pe": {
+                    "type": "string",
+                    "description": "Libellé du point d'eau"
+                },
+                "code_caracteristique_aquifere": {
+                    "type": "string",
+                    "description": "Code des caractéristiques de l'aquifère au droit du point d'eau"
+                },
+                "nom_caracteristique_aquifere": {
+                    "type": "string",
+                    "description": "Nom des caractéristiques de l'aquifère au droit du point d'eau"
+                },
+                "uri_caracteristique_aquifere": {
+                    "type": "string",
+                    "description": "URI des caractéristiques de l'aquifère au droit du point d'eau"
+                },
+                "code_etat_pe": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Code de l'état du point d'eau"
+                },
+                "nom_etat_pe": {
+                    "type": "string",
+                    "description": "Nom de l'état du point d'eau"
+                },
+                "uri_etat_pe": {
+                    "type": "string",
+                    "description": "URI de l'état du point d'eau"
+                },
+                "code_mode_gisement": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Code du mode de gisement du point d'eau"
+                },
+                "nom_mode_gisement": {
+                    "type": "string",
+                    "description": "Nom du mode de gisement du point d'eau"
+                },
+                "uri_mode_gisement": {
+                    "type": "string",
+                    "description": "URI du mode de gisement du point d'eau"
+                },
+                "profondeur_investigation": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Profondeur d'investigation (m)"
+                },
+                "commentaire_pe": {
+                    "type": "string",
+                    "description": "Commentaire sur le point d'eau"
+                },
+                "codes_entite_hg_bdlisa": {
+                    "type": "array",
+                    "description": "Entité hydrogéologique dans le référentiel bdlisa",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "noms_entite_hg_bdlisa": {
+                    "type": "array",
+                    "description": "Noms des entités hydrogéologiques liées au point d'eau dans le référentiel bdlisa",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "urns_bdlisa": {
+                    "type": "array",
+                    "description": "URN des entités hydrogéologiques (BDLISA) actuellement associés à la station construit à partir des codes BDLISA, url vers les fiches PDF BDLISA ",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "codes_masse_eau_rap": {
+                    "type": "array",
+                    "description": "Codes Masses d'eau de type Rapportage",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "noms_masse_eau_rap": {
+                    "type": "array",
+                    "description": "Noms des masses d'eau de type 'rapportage' liées au point d'eau",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "urns_masse_eau_rap": {
+                    "type": "array",
+                    "description": "URN des masse d'eau RAP actuellement associés à la station construit à partir des codes masse d'eau, url vers le SANDRE",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "codes_masse_eau_edl": {
+                    "type": "array",
+                    "description": "Codes Masses d'eau de type Etat des lieux",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "noms_masse_eau_edl": {
+                    "type": "array",
+                    "description": "Noms des masses d'eau de type 'état des lieux' liées au point d'eau",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "urns_masse_eau_edl": {
+                    "type": "array",
+                    "description": "URN des masse d'eau EDL actuellement associés à la station construit à partir des codes masse d'eau, url vers le SANDRE",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "codes_reseau": {
+                    "type": "array",
+                    "description": "Réseaux de mesure concernés",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "noms_reseau": {
+                    "type": "array",
+                    "description": "Noms des réseaux de mesure concernés",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "uris_reseau": {
+                    "type": "array",
+                    "description": "URI des réseaux associés à la station construit à partir des codes réseau, url vers le SANDRE",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "code_bassin_dce": {
+                    "type": "string",
+                    "description": "code bassin dce"
+                },
+                "geometry": {
+                    "description": "Géométrie de la station dans le système de coordonnées choisi (par défaut WGS84)",
+                    "$ref": "#/definitions/Point",
+                    "originalRef": "Point"
+                }
+            },
+            "title": "Station de mesures de la qualité",
+            "description": "Station de mesures de la qualité"
+        }
+    }
+}

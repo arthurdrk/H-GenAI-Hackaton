@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BRGM GeoRisk Map</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css">
+    <style>
+        .map {
+            height: 100vh;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map" class="map"></div>
+
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+    <script>
+        // Map center coordinates (Angers, France)
+        const center = ol.proj.fromLonLat([0.681046540784836, 47.2949757091504]);
+
+        // Create map
+        const map = new ol.Map({
+            target: 'map',
+            view: new ol.View({
+                center: center,
+                zoom: 6,
+                projection: 'EPSG:3857'
+            })
+        });
+
+        // OpenStreetMap layer (Visible by default)
+        const osmLayer = new ol.layer.Tile({
+            source: new ol.source.OSM(),
+            visible: true
+        });
+
+        // IGN Plan V2 layer
+        const ignPlan = new ol.layer.Tile({
+            source: new ol.source.WMTS({
+                url: 'https://wxs.ign.fr/essentiels/geoportail/wmts',
+                layer: 'GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2',
+                matrixSet: 'PM',
+                format: 'image/png',
+                projection: 'EPSG:3857',
+                tileGrid: new ol.tilegrid.WMTS({
+                    origin: [-20037508, 20037508],
+                    resolutions: Array(22).fill().map((_, z) => 156543.03392804097 / (1 << z)),
+                    matrixIds: Array.from(Array(22).keys())
+                }),
+                style: 'normal'
+            }),
+            visible: false
+        });
+
+        // Seismic risk layer (Visible by default)
+        const seismicRisk = new ol.layer.Tile({
+            source: new ol.source.TileWMS({
+                url: 'https://mapsref.brgm.fr/wxs/georisques/risques',
+                params: {
+                    'LAYERS': 'risq_zonage_sismique',
+                    'FORMAT': 'image/png',
+                    'TILED': true
+                },
+                serverType: 'geoserver'
+            }),
+            visible: true
+        });
+
+        // Add layers to the map
+        map.addLayer(osmLayer);
+        map.addLayer(ignPlan);
+        map.addLayer(seismicRisk);
+    </script>
+</body>
+</html>
+

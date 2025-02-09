@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Carte des Cavités Souterraines</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+    <div id="map" style="height: 600px;"></div>
+    <script>
+        var map = L.map('map').setView([45.189572, -0.622611], 7);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var wmsLayer = L.tileLayer.wms("https://mapsref.brgm.fr/wxs/georisques/risques", {
+            layers: "CAVITE_LOCALISEE",
+            format: "image/png",
+            transparent: true,
+            attribution: "© BRGM - Géorisques"
+        }).addTo(map);
+    </script>
+</body>
+</html>
+

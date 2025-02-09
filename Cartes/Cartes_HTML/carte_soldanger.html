@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BRGM GeoRisk Map</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css">
+    <style>
+        .map {
+            height: 100vh;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map" class="map"></div>
+
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+    <script>
+        // Map configuration
+        const mapConfig = {
+            center: ol.proj.fromLonLat([0.681046540784836, 47.2949757091504]),
+            zoom: 6,
+            projection: 'EPSG:3857',
+            layers: []
+        };
+
+        // Create map
+        const map = new ol.Map({
+            target: 'map',
+            view: new ol.View({
+                center: mapConfig.center,
+                zoom: mapConfig.zoom,
+                projection: mapConfig.projection
+            })
+        });
+
+        // Layer configuration
+        const layers = [
+            // OpenStreetMap Base Layer
+            {
+                id: 'osm_base',
+                type: 'osm',
+                visible: true,
+                source: new ol.source.OSM()
+            },
+            // IGN Plan Layer
+            {
+                id: 'GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2',
+                type: 'wmts',
+                visible: false,
+                url: 'https://wxs.ign.fr/essentiels/geoportail/wmts',
+                layer: 'GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2',
+                matrixSet: 'PM',
+                format: 'image/png'
+            },
+            // Thematic layers
+            {
+                id: 'SSP_CLASSIFICATION_SUP__64',
+                type: 'wms',
+                visible: true,
+                url: 'https://mapsref.brgm.fr/wxs/georisques/risques',
+                params: {
+                    'LAYERS': 'SSP_CLASSIFICATION_SUP',
+                    'FORMAT': 'image/png'
+                }
+            },
+            {
+                id: 'SSP_CLASSIFICATION_SIS__63',
+                type: 'wms',
+                visible: true,
+                url: 'https://mapsref.brgm.fr/wxs/georisques/risques',
+                params: {
+                    'LAYERS': 'SSP_CLASSIFICATION_SIS',
+                    'FORMAT': 'image/png'
+                }
+            }
+        ];
+
+        // Add layers to map
+        layers.forEach(layerConfig => {
+            let layer;
+            
+            if (layerConfig.type === 'wms') {
+                layer = new ol.layer.Tile({
+                    visible: layerConfig.visible,
+                    source: new ol.source.TileWMS({
+                        url: layerConfig.url,
+                        params: layerConfig.params,
+                        serverType: 'geoserver'
+                    })
+                });
+            } else if (layerConfig.type === 'wmts') {
+                const resolutions = new Array(22);
+                const matrixIds = new Array(22);
+                for (let z = 0; z < 22; ++z) {
+                    resolutions[z] = 156543.03392804097 / (1 << z);
+                    matrixIds[z] = z;
+                }
+
+                layer = new ol.layer.Tile({
+                    visible: layerConfig.visible,
+                    source: new ol.source.WMTS({
+                        url: layerConfig.url,
+                        layer: layerConfig.layer,
+                        matrixSet: layerConfig.matrixSet,
+                        format: layerConfig.format,
+                        projection: 'EPSG:3857',
+                        tileGrid: new ol.tilegrid.WMTS({
+                            origin: [-20037508, 20037508],
+                            resolutions: resolutions,
+                            matrixIds: matrixIds
+                        }),
+                        style: 'normal'
+                    })
+                });
+            } else if (layerConfig.type === 'osm') {
+                layer = new ol.layer.Tile({
+                    visible: layerConfig.visible,
+                    source: layerConfig.source
+                });
+            }
+
+            if (layer) {
+                map.addLayer(layer);
+            }
+        });
+    </script>
+</body>
+</html>

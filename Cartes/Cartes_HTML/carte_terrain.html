@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>BRGM Geological Map</title>
+<link href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" rel="stylesheet"/>
+<style>
+        .map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="map" id="map"></div>
+<script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+<script>
+        // Map initialization
+        const map = new ol.Map({
+            target: 'map',
+            view: new ol.View({
+                center: ol.proj.fromLonLat([0.42660845325589164, 47.64246968320421]),
+                zoom: 6,
+                projection: 'EPSG:3857'
+            })
+        });
+
+        // OpenStreetMap layer (visible by default)
+        const osmLayer = new ol.layer.Tile({
+            source: new ol.source.OSM(),
+            visible: true
+        });
+
+        // WMS layers
+        const mvtCommune = new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+                url: 'https://mapsref.brgm.fr/wxs/georisques/risques',
+                params: {
+                    'LAYERS': 'MVT_COMMUNE',
+                    'FORMAT': 'image/png'
+                },
+                ratio: 1,
+                serverType: 'geoserver'
+            }),
+            visible: true
+        });
+
+        const mvtLocalise = new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+                url: 'https://mapsref.brgm.fr/wxs/georisques/risques',
+                params: {
+                    'LAYERS': 'MVT_LOCALISE',
+                    'FORMAT': 'image/png'
+                },
+                ratio: 1,
+                serverType: 'geoserver'
+            }),
+            visible: true
+        });
+
+        // Add all layers to map
+        map.addLayer(osmLayer);
+        map.addLayer(mvtCommune);
+        map.addLayer(mvtLocalise);
+    </script>
+</body>
+</html>

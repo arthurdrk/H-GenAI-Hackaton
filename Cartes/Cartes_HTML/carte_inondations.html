@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Carte des risques d'inondation</title>
+<link href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" rel="stylesheet"/>
+<style>
+        .map {
+            height: 100vh;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+<div class="map" id="map"></div>
+<script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+<script>
+        // Configuration de la carte
+        const map = new ol.Map({
+            target: 'map',
+            view: new ol.View({
+                center: ol.proj.fromLonLat([3.8524321419477445, 42.51081693655864]),
+                zoom: 6
+            })
+        });
+
+        // Couche OpenStreetMap de base
+        const osmLayer = new ol.layer.Tile({
+            source: new ol.source.OSM()
+        });
+
+        // Couches WMS du BRGM
+        const inondationLayers = [
+            {
+                title: "Débordement cours d'eau (décennal)",
+                layer: new ol.layer.Tile({
+                    source: new ol.source.TileWMS({
+                        url: 'https://mapsref.brgm.fr/wxs/georisques/risques',
+                        params: {
+                            'LAYERS': 'INOND_01_01',
+                            'TILED': true
+                        }
+                    })
+                })
+            },
+            {
+                title: "Ruissellement (décennal)",
+                layer: new ol.layer.Tile({
+                    source: new ol.source.TileWMS({
+                        url: 'https://mapsref.brgm.fr/wxs/georisques/risques',
+                        params: {
+                            'LAYERS': 'INOND_02_01',
+                            'TILED': true
+                        }
+                    })
+                })
+            },
+            {
+                title: "Submersion marine (décennal)",
+                layer: new ol.layer.Tile({
+                    source: new ol.source.TileWMS({
+                        url: 'https://mapsref.brgm.fr/wxs/georisques/risques',
+                        params: {
+                            'LAYERS': 'INOND_03_01',
+                            'TILED': true
+                        }
+                    })
+                })
+            }
+        ];
+
+        // Ajout des couches à la carte
+        map.addLayer(osmLayer);
+        inondationLayers.forEach(l => map.addLayer(l.layer));
+
+        // Contrôles de la carte
+        map.addControl(new ol.control.Zoom());
+        map.addControl(new ol.control.FullScreen());
+    </script>
+</body>
+</html>

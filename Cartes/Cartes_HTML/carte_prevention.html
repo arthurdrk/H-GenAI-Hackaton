@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BRGM Risk Map</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css">
+    <style>
+        #map {
+            width: 100%;
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+    <script>
+        // Map center coordinates in EPSG:4326
+        const center = ol.proj.fromLonLat([-4.2920984375, 46.49672583095851]);
+
+        // Base layers
+        const osmLayer = new ol.layer.Tile({
+            source: new ol.source.OSM()
+        });
+
+        // WMS Layers from BRGM
+        const riskLayers = [
+            new ol.layer.Tile({
+                source: new ol.source.TileWMS({
+                    url: 'https://mapsref.brgm.fr/wxs/georisques/risques',
+                    params: {
+                        'LAYERS': 'SUP_INOND',
+                        'TILED': true
+                    },
+                    projection: 'EPSG:3857'
+                }),
+                title: "SUP Inondation"
+            }),
+            new ol.layer.Tile({
+                source: new ol.source.TileWMS({
+                    url: 'https://mapsref.brgm.fr/wxs/georisques/risques',
+                    params: {
+                        'LAYERS': 'SUP_INDUS',
+                        'TILED': true
+                    },
+                    projection: 'EPSG:3857'
+                }),
+                title: "SUP Risques Industriels"
+            }),
+            new ol.layer.Tile({
+                source: new ol.source.TileWMS({
+                    url: 'https://mapsref.brgm.fr/wxs/georisques/risques',
+                    params: {
+                        'LAYERS': 'SUP_MVT_TERRAIN',
+                        'TILED': true
+                    },
+                    projection: 'EPSG:3857'
+                }),
+                title: "SUP Mouvement de Terrain"
+            })
+        ];
+
+        // Map initialization
+        const map = new ol.Map({
+            target: 'map',
+            layers: [osmLayer, ...riskLayers],
+            view: new ol.View({
+                center: center,
+                zoom: 6
+            })
+        });
+
+        // Layer switcher control
+        const layerSwitcher = new ol.control.LayerSwitcher({
+            activationMode: 'click',
+            startActive: false,
+            collapseTipLabel: 'Legend'
+        });
+        map.addControl(layerSwitcher);
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Carte feu de forets</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css">
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+    <style>
+        .map { height: 800px; width: 100%; }
+    </style>
+</head>
+<body>
+    <div id="map" class="map"></div>
+    
+    <script>
+        var center = ol.proj.fromLonLat([-4.2920984375, 46.49672583095851]);
+        
+        var map = new ol.Map({
+            target: 'map',
+            view: new ol.View({
+                center: center,
+                zoom: 6
+            })
+        });
+
+        // Couche OpenStreetMap de base
+        var osmLayer = new ol.layer.Tile({
+            source: new ol.source.OSM()
+        });
+
+        // Couche WMS ZONAGE_OLD
+        var zonageLayer = new ol.layer.Tile({
+            source: new ol.source.TileWMS({
+                url: 'https://mapsref.brgm.fr/wxs/georisques/risques',
+                params: {
+                    'LAYERS': 'ZONAGE_OLD',
+                    'FORMAT': 'image/png',
+                    'TRANSPARENT': true
+                },
+                serverType: 'geoserver',
+                attributions: '© BRGM - Géorisques'
+            }),
+            opacity: 0.7
+        });
+
+        map.addLayer(osmLayer);
+        map.addLayer(zonageLayer);
+
+        // Contrôles de la carte
+        map.addControl(new ol.control.Zoom());
+        map.addControl(new ol.control.Rotate());
+        map.addControl(new ol.control.MousePosition());
+    </script>
+</body>
+</html>

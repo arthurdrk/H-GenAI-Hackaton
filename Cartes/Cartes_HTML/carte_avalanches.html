@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #map { height: 600px; width: 100%; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Configuration initiale de la carte centrée sur la France
+        var map = L.map('map').setView([46.28455099961356, 1.4940352690696719], 6);
+
+        // Fond de carte OpenStreetMap
+        var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        // Plan IGN
+        var planIGN = L.tileLayer.wms('https://wxs.ign.fr/essentiels/geoportail/wmts', {
+            layers: 'GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2',
+            format: 'image/png',
+            transparent: true,
+            attribution: '© IGN'
+        });
+
+        // Photos aériennes IGN
+        var photoAerienne = L.tileLayer.wms('https://wxs.ign.fr/essentiels/geoportail/wmts', {
+            layers: 'ORTHOIMAGERY.ORTHOPHOTOS',
+            format: 'image/jpeg',
+            attribution: '© IGN'
+        });
+
+        // Couches WMS des avalanches du BRGM
+        var limitesEnquete = L.tileLayer.wms('https://mapsref.brgm.fr/wxs/georisques/risques', {
+            layers: 'CLPA_limite_enquete',
+            format: 'image/png',
+            transparent: true,
+            attribution: '© BRGM',
+            opacity: 0.7
+        }).addTo(map);
+
+        var interpretation = L.tileLayer.wms('https://mapsref.brgm.fr/wxs/georisques/risques', {
+            layers: 'CLPA_interpretation',
+            format: 'image/png',
+            transparent: true,
+            attribution: '© BRGM',
+            opacity: 0.7
+        }).addTo(map);
+
+        var temoignages = L.tileLayer.wms('https://mapsref.brgm.fr/wxs/georisques/risques', {
+            layers: 'CLPA_temoignage',
+            format: 'image/png',
+            transparent: true,
+            attribution: '© BRGM',
+            opacity: 0.7
+        }).addTo(map);
+
+        // Contrôle des couches
+        var baseMaps = {
+            "OpenStreetMap": osm,
+            "Plan IGN": planIGN,
+            "Photographie aérienne": photoAerienne
+        };
+
+        var overlayMaps = {
+            "Zones sans enquête terrain": limitesEnquete,
+            "Interprétation des phénomènes passés": interpretation,
+            "Témoignages d'avalanches": temoignages
+        };
+
+        L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+    </script>
+</body>
+</html>
