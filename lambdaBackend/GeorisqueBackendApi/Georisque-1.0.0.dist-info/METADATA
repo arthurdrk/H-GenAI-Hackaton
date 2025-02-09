@@ -1,0 +1,18 @@
+Metadata-Version: 2.2
+Name: Georisque
+Version: 1.0.0
+Summary: Services API Géorisques
+Home-page: 
+Author-email: 
+Keywords: Swagger,Services API Géorisques
+Requires-Dist: urllib3>=1.15
+Requires-Dist: six>=1.10
+Requires-Dist: certifi
+Requires-Dist: python-dateutil
+Dynamic: description
+Dynamic: keywords
+Dynamic: requires-dist
+Dynamic: summary
+
+    Description de l&#x27;API de Géorisques  # noqa: E501
+    
