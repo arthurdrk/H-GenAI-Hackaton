@@ -1,7 +1,7 @@
 ## H-GenAI-Hackaton
 
-Nom de l'équipe : **GEN'SAE**\n
-Membres : Titouan CONSTANCE, Arthur DE ROUCK, Yann GAUTIER, Valentin GENAY, Quentin GOUIFFES, Alexandre HOUARD
+Nom de l'équipe : **GEN'SAE**  
+Membres : Titouan CONSTANCE, Arthur DE ROUCK, Yann GAUTIER, Valentin GENAY, Quentin GOUIFFES, Alexandre HOUARD  
 Cas d'usage : **Sfil 2**
 
 ### Solution proposée
