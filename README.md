@@ -4,7 +4,7 @@
 **Membres** : Titouan CONSTANCE, Arthur DE ROUCK, Yann GAUTIER, Valentin GENAY, Quentin GOUIFFES, Alexandre HOUARD  
 **Cas d'usage** : Sfil 2  
 
- <img src="https://github.com/user-attachments/assets/b7d89183-b44e-4d7f-a888-795390c68234" style="width: 476px;" />  
+<img width="476" alt="gensae" src="https://github.com/user-attachments/assets/1ad88db6-74b9-4fd4-a7aa-886fbbf9c198" />
 
 *Figure 1 : Notre équipe*  
 
@@ -15,7 +15,8 @@ Nous avons développé un **portail interactif** combiné à un **agent conversa
 
 Les résultats sont présentés sous forme de **visualisations interactives** telles que des cartes géographiques ou des graphiques dynamiques. L'application s'appuie largement sur **l'API d'Amazon Bedrock**.  
 
- <img src="https://github.com/user-attachments/assets/fadd2dab-632d-4bc7-bb51-1157513fa3ee" style="width: 476px;" />  
+<img width="475" alt="summary" src="https://github.com/user-attachments/assets/dc6fac18-d92c-46b3-b9f6-53db40fd84d8" />
+
 *Figure 2 : Présentation du projet*  
 
 ---
@@ -23,17 +24,19 @@ Les résultats sont présentés sous forme de **visualisations interactives** te
 ### Utilisation
 L'utilisateur fait sa requête à **chatbot_lib**. Ce dernier affiche :  
 - Une **synthèse des risques encourus** pour la communauté locale demandée, avec une **visualisation des risques**.  
-- Dans un autre onglet, des **informations pertinentes** relatives au risque et à la communauté locale demandés.  
+- Dans un autre onglet, des **informations pertinentes** relatives au risque et à la communauté locale demandés.
+- 
+<img width="469" alt="UI" src="https://github.com/user-attachments/assets/d2ba0e12-c91b-46d3-ba85-b1048bbb74a9" />
 
-![Expérience utilisateur](https://github.com/user-attachments/assets/e26408f7-6d7a-4e55-aa76-35be24e76dac)  
 *Figure 3 : Expérience utilisateur*  
 
 ---
 
 ### Architecture du projet
-L'architecture repose sur un **système modulaire**, intégrant des services de traitement de données, un chatbot intelligent et des visualisations interactives.  
+L'architecture repose sur un **système modulaire**, intégrant des services de traitement de données, un chatbot intelligent et des visualisations interactives. 
 
-![Schéma technique de l'architecture](https://github.com/user-attachments/assets/52174c21-5db5-457c-a215-57b3698e604b)  
+<img width="476" alt="architecture" src="https://github.com/user-attachments/assets/864c9808-9a80-45e1-999a-1dc6123a1c6c" />
+
 *Figure 4 : Schéma technique de l'architecture*  
 
 ---
@@ -49,7 +52,9 @@ L'architecture repose sur un **système modulaire**, intégrant des services de 
 ### Business Model
 Notre modèle économique repose sur l'intégration de notre outil dans le **processus décisionnel de Sfil**, avec des options d'expansion vers d'autres collectivités locales.  
 
-![Business model](https://github.com/user-attachments/assets/9be3def7-b240-49ae-abf0-6ef0424d6c24)  
+<img width="476" alt="business model" src="https://github.com/user-attachments/assets/4c3b94cc-c1cf-4124-945a-98c80e9ced46" />
+
+*Figure 4 : Business model* 
 *Figure 5 : Business model*  
 
 ---
