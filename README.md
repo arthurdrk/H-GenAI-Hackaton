@@ -11,7 +11,7 @@
 ---
 
 ### Solution proposée
-Nous avons développé un **portail interactif** combiné à un **agent conversationnel** capable d'exploiter les données publiques (INSEE, DGFIP) et internes à Sfil. Ce portail permet aux utilisateurs de formuler des requêtes afin de **rechercher, croiser et analyser** les informations disponibles.  
+En 48 heures, nous avons développé un **portail interactif** combiné à un **agent conversationnel** capable d'exploiter les données publiques (INSEE, DGFIP) et internes à Sfil. Ce portail permet aux utilisateurs de formuler des requêtes afin de **rechercher, croiser et analyser** les informations disponibles.  
 
 Les résultats sont présentés sous forme de **visualisations interactives** telles que des cartes géographiques ou des graphiques dynamiques. L'application s'appuie largement sur **l'API d'Amazon Bedrock**.  
 
