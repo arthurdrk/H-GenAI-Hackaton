@@ -1,17 +1,8 @@
+## H-GenAI-Hackaton
 
-
-
-
-
-
-
-
-
-## Hackathon-HgenAI
-
-Nom de l'équipe : GEN'SAE 
-
-Cas d'usage : Sfil 2
+Nom de l'équipe : **GEN'SAE**
+Membres : Titouan CONSTANCE, Arthur DE ROUCK, Yann GAUTIER, Valentin GENAY, Quentin GOUIFFES, Alexandre HOUARD
+Cas d'usage : **Sfil 2**
 
 ### Solution proposée
 Nous proposons de développer un portail interactif combiné à un agent conversationnel capable d'exploiter les données publiques (INSEE, DGFIP) et internes à Sfil. Ce portail permettra aux utilisateurs de formuler des requêtes afin de rechercher, croiser et analyser les informations disponibles. Les résultats seront présentés sous forme de visualisations interactives, telles que des cartes géographiques ou des graphiques dynamiques.
