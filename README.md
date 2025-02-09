@@ -4,7 +4,7 @@
 **Membres** : Titouan CONSTANCE, Arthur DE ROUCK, Yann GAUTIER, Valentin GENAY, Quentin GOUIFFES, Alexandre HOUARD  
 **Cas d'usage** : Sfil 2  
 
- <img src="https://github.com/user-attachments/assets/b7d89183-b44e-4d7f-a888-795390c68234" style="width: 476px;" />
+ <img src="https://github.com/user-attachments/assets/b7d89183-b44e-4d7f-a888-795390c68234" style="width: 476px;" />  
 
 *Figure 1 : Notre équipe*  
 
@@ -15,7 +15,7 @@ Nous avons développé un **portail interactif** combiné à un **agent conversa
 
 Les résultats sont présentés sous forme de **visualisations interactives** telles que des cartes géographiques ou des graphiques dynamiques. L'application s'appuie largement sur **l'API d'Amazon Bedrock**.  
 
- <img src="https://github.com/user-attachments/assets/fadd2dab-632d-4bc7-bb51-1157513fa3ee" style="width: 476px;" />
+ <img src="https://github.com/user-attachments/assets/fadd2dab-632d-4bc7-bb51-1157513fa3ee" style="width: 476px;" />  
 *Figure 2 : Présentation du projet*  
 
 ---
