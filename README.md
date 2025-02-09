@@ -25,8 +25,11 @@ Les résultats sont présentés sous forme de **visualisations interactives** te
 L'utilisateur fait sa requête à **chatbot_lib**. Ce dernier affiche :  
 - Une **synthèse des risques encourus** pour la communauté locale demandée, avec une **visualisation des risques**.  
 - Dans un autre onglet, des **informations pertinentes** relatives au risque et à la communauté locale demandés.
-- 
-<img width="469" alt="UI" src="https://github.com/user-attachments/assets/d2ba0e12-c91b-46d3-ba85-b1048bbb74a9" />
+
+
+
+
+https://github.com/user-attachments/assets/474ff458-ff67-4a7a-831e-a83079038cfe
 
 *Figure 3 : Expérience utilisateur*  
 
@@ -55,7 +58,6 @@ Notre modèle économique repose sur l'intégration de notre outil dans le **pro
 <img width="476" alt="business model" src="https://github.com/user-attachments/assets/4c3b94cc-c1cf-4124-945a-98c80e9ced46" />
 
 *Figure 4 : Business model* 
-*Figure 5 : Business model*  
 
 ---
 
