@@ -62,4 +62,3 @@ Notre modèle économique repose sur l'intégration de notre outil dans le **pro
 
 ---
 
-📌 **Projet développé par l'équipe GEN'SAE**
